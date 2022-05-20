@@ -11,7 +11,7 @@
 ## Aim
 #### _To investigate effects of novobiocin on gene expression in **_Salmonella enterica_ subsp. _enterica_ serovar Typhimurium str. 14028S**._
 
-## Project objectives
+## Project Objectives
 #### 1. align reads to reference genome;
 #### 2. obtain transcript count matrix;
 #### 3. [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) analysis of calculated expression matrix;
@@ -19,10 +19,10 @@
 #### 5. [Wopper](https://wopper.ba.itb.cnr.it) based visualisation of moduls of interest based on results of WGCNA analysis;
 #### 6. develop a reproducible workflow for transcroptomic data analysis based on [Snakemake pipeline](https://snakemake.readthedocs.io/en/stable/).
 
-## Data description
+## Data Description
 #### Data is publicly available and can be found in paper of [Natalia Gogoleva _et. al_, 2020](). 
 
-## Snakemake pipeline desciption
+## Snakemake Pipeline Desciption
 #### Snakemake pipeline consist of ... number of rules:
 * [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) analysis of samples (SnakeMake Wrapper *v 1.5.0/bio/fastqc*)
 * [Hisat2](http://daehwankimlab.github.io/hisat2/) Index (*v 2.2.0*)
@@ -37,7 +37,9 @@
 
 ## Results
 
-## Authors and acknowledgements
+## Usefull References
+
+## Authors and Acknowledgements
 #### Students
 * [Valeriia Ladyhina](https://github.com/ValeriiaLadyhina)
 * [Semyon Kupriyanov](https://github.com/immbiochem)
