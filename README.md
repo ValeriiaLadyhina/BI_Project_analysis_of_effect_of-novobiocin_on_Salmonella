@@ -76,6 +76,19 @@ cd Path/to/folder/snakemake
 ```markdown
 snakemake --use-conda --cores all
 ```
+#### 9) Some mistakes solutions, suggestions and explanations
+##### Possible mistakes and their solutions
+
+##### Suggestions
+```markdown
+--cores all # use all possible cores
+--cores N   # use N number of cores
+```
+```markdown
+snakemake --use-conda --cores all -F # force to rerun fully Snakemake pipeline, otherwise it will run only that parts 
+                                     # that did not run before
+```
+##### Explanations
 ## Results
 
 ## Usefull References
