@@ -34,10 +34,13 @@
 * Genes' names converter (Jupyter Notebook)
 * 
 
+## Instalation of Snakemake
+
 
 ## Results
 
 ## Usefull References
+*  [Mölder F, Jablonski KP, Letcher B et al. Sustainable data analysis with Snakemake [version 2; peer review: 2 approved]. F1000Research 2021, 10:33](https://doi.org/10.12688/f1000research.29032.2)
 
 ## Authors and Acknowledgements
 #### Students
