@@ -119,6 +119,8 @@ total                    76              1              8
 Select jobs to execute...
 
 ```
+## Repository map
+* 
 ## Results
 
 ## Usefull References
@@ -130,3 +132,6 @@ Select jobs to execute...
 * [Semyon Kupriyanov](https://github.com/immbiochem)
 #### Supervisor
 * [Alexandr Tkachenko](https://github.com/castrofiber)
+
+## Feedback
+If you have any questions, suggestions or complains please approach authors via email:[valeriia.ladyhina@slu.se](https://internt.slu.se/cv-originalen/valeriia-ladyhina/)
