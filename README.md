@@ -17,14 +17,21 @@
 #### 3. [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) analysis of calculated expression matrix;
 #### 4. weighted gene co-ecspression network analysis using the [WGCNA](https://horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/); 
 #### 5. [Wopper](https://wopper.ba.itb.cnr.it) based visualisation of moduls of interest based on results of WGCNA analysis;
-#### 6. develop a reproducible workflow for transcroptomic data analysis based on [snakemake pipeline](https://snakemake.readthedocs.io/en/stable/).
+#### 6. develop a reproducible workflow for transcroptomic data analysis based on [Snakemake pipeline](https://snakemake.readthedocs.io/en/stable/).
 
 ## Data description
 #### Data is publicly available and can be found in paper of [Natalia Gogoleva _et. al_, 2020](). 
 
-## Snakemake pipeline desciprion
+## Snakemake pipeline desciption
 #### Snakemake pipeline consist of ... number of rules:
-* FastQC analysis of samples
+* [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) analysis of samples (SnakeMake Wrapper *v 1.5.0/bio/fastqc*)
+* [Hisat2](http://daehwankimlab.github.io/hisat2/) Index (*v 2.2.0*)
+* [Hisat2](http://daehwankimlab.github.io/hisat2/) Align (Snakemake wrapper *v 1.5.0/bio/hisat2/align*)
+* [Samtools](http://daehwankimlab.github.io/hisat2/) sort (Snakemake wrapper *v1.5.0/bio/samtools/sort*)
+* [StringTie](https://ccb.jhu.edu/software/stringtie/) assembly (*v 2.2.1)
+* Matrix creation by [prepDE.py3](https://ccb.jhu.edu/software/stringtie/dl/prepDE.py3) (Python3 script)
+* [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) (R Markdown)
+* Genes' names converter (Jupyter Notebook)
 * 
 
 
