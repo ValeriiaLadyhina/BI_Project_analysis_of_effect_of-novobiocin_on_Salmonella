@@ -22,7 +22,17 @@
 ## Data description
 #### Data is publicly available and can be found in paper of [Natalia Gogoleva _et. al_, 2020](). 
 
-## Snakemake pipeline
+## Snakemake pipeline desciprion
+#### Snakemake pipeline consist of ... number of rules:
+* FastQC analysis of samples
+* 
 
 
 ## Results
+
+## Authors and acknowledgements
+#### Students
+* [Valeriia Ladyhina](https://github.com/ValeriiaLadyhina)
+* [Semyon Kupriyanov](https://github.com/immbiochem)
+#### Supervisor
+* [Alexandr Tkachenko](https://github.com/castrofiber)
