@@ -17,7 +17,7 @@
 #### 3. [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) analysis of calculated expression matrix;
 #### 4. weighted gene co-ecspression network analysis using the [WGCNA](https://horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/); 
 #### 5. [Wopper](https://wopper.ba.itb.cnr.it) based visualisation of moduls of interest based on results of WGCNA analysis;
-#### 6. develop a reproducible workflow for transcroptomic data analysis based on [Snakemake pipeline](https://snakemake.readthedocs.io/en/stable/).
+#### 6. develop a reproducible workflow for transcriptomic data analysis based on [Snakemake pipeline](https://snakemake.readthedocs.io/en/stable/).
 
 ## Data Description
 #### Data is publicly available and can be found in paper of [Natalia Gogoleva _et. al_, 2020](). 
