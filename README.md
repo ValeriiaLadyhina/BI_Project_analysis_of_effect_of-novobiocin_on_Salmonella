@@ -78,7 +78,16 @@ snakemake --use-conda --cores all
 ```
 #### 9) Some mistakes solutions, suggestions and explanations
 ##### Possible mistakes and their solutions
-
+##### LockException
+```
+LockException:
+Error: Directory cannot be locked. Please make sure that no other Snakemake process is trying to create the same files 
+in the following directory:
+```
+##### LockException Solution
+```markdown
+snakemake --unlock argument
+```
 ##### Suggestions
 ```markdown
 --cores all # use all possible cores
@@ -89,6 +98,27 @@ snakemake --use-conda --cores all -F # force to rerun fully Snakemake pipeline, 
                                      # that did not run before
 ```
 ##### Explanations
+```
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 10
+Rules claiming more threads will be scaled down.
+Job stats:
+job                   count    min threads    max threads
+------------------  -------  -------------  -------------
+all                       1              1              1
+deseq                     1              1              1
+fastqc                   18              1              1
+hisat2_align             18              2              2
+hisat2_index              1              1              1
+matrix_creation           1              1              1
+samtools_sort            18              8              8
+stringtie_assembly       18              8              8
+total                    76              1              8
+
+Select jobs to execute...
+
+```
 ## Results
 
 ## Usefull References
