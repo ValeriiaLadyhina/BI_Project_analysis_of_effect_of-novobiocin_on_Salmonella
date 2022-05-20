@@ -134,4 +134,4 @@ Select jobs to execute...
 * [Alexandr Tkachenko](https://github.com/castrofiber)
 
 ## Feedback
-If you have any questions, suggestions or complains please approach authors via email:[valeriia.ladyhina@slu.se](https://internt.slu.se/cv-originalen/valeriia-ladyhina/)
+If you have any questions, suggestions or complains please approach authors via email: [valeriia.ladyhina@slu.se](https://internt.slu.se/cv-originalen/valeriia-ladyhina/)
