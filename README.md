@@ -35,7 +35,13 @@
 * 
 
 ## Instalation of Snakemake
-
+#### Full installation description you can find on the [webpage of Snakemake](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
+#### 1) Install a Conda-based Python3 distribution
+#### 2) Install [Mambaforge](https://github.com/conda-forge/miniforge#mambaforge)
+```markdown
+curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh"
+bash Mambaforge-$(uname)-$(uname -m).sh
+```
 
 ## Results
 
