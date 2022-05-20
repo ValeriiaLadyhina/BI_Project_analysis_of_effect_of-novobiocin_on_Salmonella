@@ -12,7 +12,7 @@
 #### _To investigate effects of novobiocin on gene expression in **_Salmonella enterica_ subsp. _enterica_ serovar Typhimurium str. 14028S**._
 
 ## Project objectives
-https://www.sciencedirect.com/science/article/pii/S2352340920301918#sec1#### 1. align reads to reference genome;
+#### 1. align reads to reference genome;
 #### 2. obtain transcript count matrix;
 #### 3. [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) analysis of calculated expression matrix;
 #### 4. weighted gene co-ecspression network analysis using the [WGCNA](https://horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/); 
