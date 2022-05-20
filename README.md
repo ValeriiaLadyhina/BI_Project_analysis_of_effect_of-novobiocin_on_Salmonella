@@ -81,8 +81,8 @@ snakemake --use-conda --cores all
 ##### LockException
 ```
 LockException:
-Error: Directory cannot be locked. Please make sure that no other Snakemake process is trying to create the same files 
-in the following directory:
+Error: Directory cannot be locked. Please make sure that no other Snakemake process is trying to 
+create the same files in the following directory:
 ```
 ##### LockException Solution
 ```markdown
@@ -94,8 +94,8 @@ snakemake --unlock argument
 --cores N   # use N number of cores
 ```
 ```markdown
-snakemake --use-conda --cores all -F # force to rerun fully Snakemake pipeline, otherwise it will run only that parts 
-                                     # that did not run before
+snakemake --use-conda --cores all -F # force to rerun fully Snakemake pipeline, otherwise 
+                                     # it will run only that parts that did not run before
 ```
 ##### Explanations
 ```
