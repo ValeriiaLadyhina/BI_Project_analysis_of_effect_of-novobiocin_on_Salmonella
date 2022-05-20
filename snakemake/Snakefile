@@ -1,0 +1,107 @@
+report: "report/workflow.rst"
+
+configfile: "config.yaml"
+
+rule all:
+    input:
+        html = expand("analysis/qc/fastqc/{sample}.html", sample=config["samples"]),
+        zip = expand("analysis/qc/fastqc/{sample}_fastqc.zip", sample=config["samples"]),
+        index_files = expand("analysis/index.{index}.ht2", index=config["indexes"]),
+        assembly  = expand("analysis/stringtie_assembly/{sample}/{sample}.gtf", sample=config["samples"]),
+        matrix = "gene_count_matrix.csv",
+        deseq_report = "deseq.html"
+
+
+rule fastqc:
+    input:
+        reads = "data/reads/{sample}.fastq"
+    output:
+        html = "analysis/qc/fastqc/{sample}.html",
+        zip = "analysis/qc/fastqc/{sample}_fastqc.zip"
+    params: "--quiet"
+    log:
+        log = "logs/fastqc/{sample}.log"
+    wrapper:
+        "v1.5.0/bio/fastqc"
+
+rule hisat2_index:
+    input:
+        html = expand("analysis/qc/fastqc/{sample}.html", sample=config["samples"]),
+        zip = expand("analysis/qc/fastqc/{sample}_fastqc.zip", sample=config["samples"]),
+        genome = expand("data/{genome}_genomic.fna", genome=config["genome"])
+    output:
+        index_files = expand("analysis/index.{index}.ht2", index=config["indexes"])
+    conda:
+        "environment.yaml"
+    shell:
+        "hisat2-build -p 2 {input.genome} analysis/index"
+
+rule hisat2_align:
+    input:
+        reads = ["data/reads/{sample}.fastq"],
+        index_files = expand("analysis/index.{index}.ht2", index=config["indexes"])
+    output:
+        "analysis/mapped/{sample}.sam"
+    log:
+        "logs/hisat2/hisat2_align_{sample}.log"
+    params:
+        extra = "",
+        idx = "analysis/index"
+    threads: 2
+    wrapper:
+        "v1.5.0/bio/hisat2/align"
+
+rule samtools_sort:
+    input:
+        "analysis/mapped/{sample}.sam"
+    output:
+        sorted_bam = "analysis/mapped/{sample}.sorted.bam",
+    log:
+        "logs/samtools_sort/{sample}.log",
+    params:
+        extra="-m 4G",
+    threads: 8
+    wrapper:
+        "v1.5.0/bio/samtools/sort"
+
+rule stringtie_assembly:
+    input:
+        sorted_bam = "analysis/mapped/{sample}.sorted.bam",
+        reference_annotation = "data/sequence.gff3"
+    output:
+        assembly = "analysis/stringtie_assembly/{sample}/{sample}.gtf"
+    log:
+		"output/logs/stringtie/{sample}.log"
+    threads: 8
+    conda:
+        "envs/stringtie.yaml"
+    shell:
+        "stringtie -p {threads} -G {input.reference_annotation} -o {output.assembly} -e {input.sorted_bam}"
+
+rule matrix_creation:
+    input:
+        assembly = expand("analysis/stringtie_assembly/{sample}/{sample}.gtf", sample=config["samples"])
+    output:
+        gene_file = "gene_count_matrix.csv"
+    conda: "environment.yaml"
+    shell:
+        "python3 scripts/prepDE.py3 -i analysis/stringtie_assembly"
+
+rule deseq:
+    input:
+        "transcript_count_matrix.csv",
+    output:
+        "deseq.html"
+    conda:
+        "environment.yaml"
+    script:
+        "deseq.Rmd"
+
+#rule gene_names_convereter:
+#    output:
+#        "test.txt"
+#    log:
+#        # optional path to the processed notebook
+#        notebook="logs/notebooks/processed_notebook.ipynb"
+#    notebook:
+#        "scripts/hello.py.ipynb"

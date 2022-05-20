@@ -1,0 +1,123 @@
+---
+title: "DESeq analysis "
+author: "Valeriia Ladyhina & Semyon Kupriyanov"
+date: "`r Sys.Date()`"
+output:  
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: lumen
+---
+# Introduction
+*This R Markdown is part of bigger pipeline on analysis of RNA seq data obtained in experiment on effects of different concentrations of antibiotic novobiocin on gene expression in __Salmonella enterica subsp. enterica serovar Typhimurium str. 14028S__. Analysis was performed on publicly available transciptomics data that can be found __[here]('https://www.sciencedirect.com/science/article/pii/S2352340920301918#sec1')__.*
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Instalation of required packages
+*This part of pipeline includes few different packages, that have been installed on your computer, namely: __DESeq2, dplyr, ggplot2, gplots__.*
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+requiredPackages = c('DESeq2', 'dplyr', 'ggplot2','gplots')
+for(p in requiredPackages){
+  if(!require(p,character.only = TRUE)) install.packages(p, repos = "http://cran.us.r-project.org" )
+  library(p,character.only = TRUE)}
+```
+# DESeq2 analysis
+*For this analysis we used two files: __transcript_count_matrix.csv__, obtained during previous steps of snalemake pipeline based on StringTie and __pheno.csv__ - file that describes our experimental data.*
+```{r echo=FALSE, results='hide', message=FALSE}
+countData <- read.csv("./transcript_count_matrix.csv", row.names="transcript_id")
+colData <- read.csv('./data/pheno.csv', sep=";", row.names=1)
+# Transform to factors
+colData$Time <- factor(colData$Time)
+colData$Treated <- factor(colData$Treated)
+str(colData)
+all(rownames(colData) %in% colnames(countData))
+countData <- countData[, rownames(colData)]
+all(rownames(colData) == colnames(countData))
+
+# Create a DESeqDataSet from count matrix and labels
+
+dds <- DESeqDataSetFromMatrix(countData = countData,
+                              colData = colData, design = ~ Treated+Time+Treated:Time)
+
+# Run the default analysis for DESeq2 and generate results table
+dds <- DESeq(dds)
+res <- results(dds)
+```
+
+*Next step is normalization of counts and saving of the result into file __norm-matrix-deseq2.txt__*
+
+```{r echo=FALSE, results='hide'}
+# Get normalized counts and write this to a file
+# Turn it into a dataframe to have proper column names.
+nc = counts(dds,normalized=TRUE)
+dt = data.frame("id"=rownames(nc),nc)
+# Save the normalize data matrix.
+write.table(dt, file="norm-matrix-deseq2.txt", sep="\t",  row.name=FALSE, col.names=TRUE,quote=FALSE)
+```
+
+*PCA analysis*
+
+```{r echo=FALSE, results='hide'}
+# The function rlogTransform returns a SummarizedExperiment object which contains the rlog-transformed
+# values in its assay slot:
+
+rld <- rlog(dds)
+head(assay(rld))
+
+plotPCA(rld, intgroup = c("Treated", "Time"))
+```
+
+*At this step we are searching for significant genes*
+
+```{r echo=FALSE, results='hide'}
+# Find significant genes
+res_1 = as.data.frame(res)
+res_1 = mutate(res_1, sig=ifelse(res_1$padj<0.05, "FDR<0.05", "Not_sig"))
+res_1[which(abs(res_1$log2FoldChange)<1.5), "sig"] = "Not_sig"
+res_2 = res_1[which(res_1$sig == "FDR<0.05"),] # 789 genes
+sum(res_2$log2FoldChange>0) # 370 positive genes
+sum(res_2$log2FoldChange<0) # 419 negative genes
+```
+*Volcano plot*
+
+```{r echo=FALSE}
+# Volcano_plot
+
+ggplot(res_1, aes(log2FoldChange, -log10(padj)))+
+  geom_point(aes(col=sig))+
+  scale_color_manual(values = c("red", "black"))
+```
+```{r echo=FALSE, eval=FALSE}
+# Check some parametrs
+# A so-called MA plot provides a useful overview for an experiment with a two-group comparison:
+plotMA(res, ylim = c(-8, 8))
+```
+```{r echo=FALSE,, eval=FALSE}
+# The function plotDispEsts visualizes DESeq2вЂ™s dispersion estimates:
+plotDispEsts(dds, ylim = c(1e-6, 1e1))
+```
+```{r echo=FALSE, eval=FALSE}
+# Another useful diagnostic plot is the histogram of the p values
+hist(res$pvalue, breaks=20, col="grey")
+```
+
+*DEG heatmap*
+
+```{r echo=FALSE}
+# Heatmap for DEG
+matrix_deg = assay(rld)[rownames(res_2), ]
+rownames(matrix_deg) = sapply(rownames(matrix_deg ), 
+                    function(x) strsplit(x, split = "_")[[1]][2])
+heatmap.2(matrix_deg, scale = "row",
+          trace="none", dendrogram = "both")
+```
+
+*Negative and postive DEG were saved in files __negative_deg.txt__ and __positive_deg.txt__ respectively.*
+
+```{r echo=FALSE}
+# Write negative and positive DEG
+write.table(rownames(res_2[res_2$log2FoldChange<0, ]), 
+            file="negative_deg.txt", sep="\t", col.names=NA, quote=FALSE)
+write.table(rownames(res_2[res_2$log2FoldChange>0, ]), 
+            file="positive_deg.txt", sep="\t", col.names=NA, quote=FALSE)
+```
