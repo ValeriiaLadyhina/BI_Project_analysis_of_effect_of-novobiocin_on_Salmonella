@@ -46,6 +46,7 @@ conda install -n base -c conda-forge mamba
 ```markdown
 conda activate base
 mamba create -c conda-forge -c bioconda -n snakemake snakemake
+```
 ##### To delete environment
 ```markdown
 conda env remove -n snakemake
@@ -65,19 +66,16 @@ snakemake --help
 #### 5) Clone [repositoty]() to folder snakemake
 
 
-#### 6) Install pandoc *v 2.12
-```markdown
-conda install pandoc
-```
-#### 7) Go to folder snakemake
+
+#### 6) Go to folder snakemake
 ```markdown
 cd Path/to/folder/snakemake
 ```
-#### 8) Start snakemake 
+#### 7) Start snakemake 
 ```markdown
 snakemake --use-conda --cores all
 ```
-#### 9) Some mistakes solutions, suggestions and explanations
+#### 8) Some mistakes solutions, suggestions and explanations
 ##### Possible mistakes and their solutions
 ##### LockException
 ```
