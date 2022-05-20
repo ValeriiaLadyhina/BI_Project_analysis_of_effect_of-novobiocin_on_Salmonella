@@ -38,16 +38,18 @@
 #### Full installation description you can find on the [webpage of Snakemake](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
 #### 1) Install a Conda-based Python3 distribution
 #### 2) Install [Mamba](https://github.com/mamba-org/mamba)
-##### Install mamba
 ```markdown
 conda install -n base -c conda-forge mamba
 ```
-##### Create snakemake environment
+#### 3) Create snakemake environment
 ```markdown
 conda activate base
 mamba create -c conda-forge -c bioconda -n snakemake snakemake
+##### To delete environment
+```markdown
+conda env remove -n snakemake
 ```
-##### Activate snakemake environment
+#### 4) Activate snakemake environment
 ```markdown
 conda activate snakemake
 ```
@@ -59,8 +61,21 @@ conda deactivate
 ```markdown
 snakemake --help
 ```
-#### 3) 
+#### 5) Clone [repositoty]() to folder snakemake
 
+
+#### 6) Install pandoc *v 2.12
+```markdown
+conda install pandoc
+```
+#### 7) Go to folder snakemake
+```markdown
+cd Path/to/folder/snakemake
+```
+#### 8) Start snakemake 
+```markdown
+snakemake --use-conda --cores all
+```
 ## Results
 
 ## Usefull References
