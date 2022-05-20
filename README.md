@@ -1,4 +1,4 @@
-# A Reproducible Workflow for Project "Studying _Salmonella_ Gene Expression Dynamics in Response to Novobiocin"
+# A Reproducible Snakemake-based Workflow for Project "Studying _Salmonella_ Gene Expression Dynamics in Response to Novobiocin"
 ## Project was performed as a part of studies in [Bioinformatics institute](https://bioinf.me/en) on program [Bioinformatics for Biologists](https://bioinf.me/en/education#!/tab/40660730-1) during spring semester 2022.
 
 ## Intoduction
