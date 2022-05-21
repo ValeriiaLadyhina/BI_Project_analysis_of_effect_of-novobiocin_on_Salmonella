@@ -130,25 +130,29 @@ snakemake --use-conda --cores all -F # force to rerun fully Snakemake pipeline, 
                                      # it will run only that parts that did not run before
 ```
 ##### Explanations
+*This is how the working pipeline starting its processes. In this part Snakemake describes which process will be performed and how many jobs per process (count).
 ```
 Building DAG of jobs...
 Using shell: /bin/bash
-Provided cores: 10
-Rules claiming more threads will be scaled down.
 Job stats:
-job                   count    min threads    max threads
-------------------  -------  -------------  -------------
-all                       1              1              1
-deseq                     1              1              1
-fastqc                   18              1              1
-hisat2_align             18              2              2
-hisat2_index              1              1              1
-matrix_creation           1              1              1
-samtools_sort            18              8              8
-stringtie_assembly       18              8              8
-total                    76              1              8
-
-Select jobs to execute...
+job                              count    min threads    max threads
+-----------------------------  -------  -------------  -------------
+KEGG_WGCNA                           1              1              1
+KEGG_hub                             1              1              1
+KEGG_modules                         1              1              1
+all                                  1              1              1
+deseq                                1              1              1
+fastqc                              18              1              1
+gene_name_converter_hubs             1              1              1
+gene_name_converter_modules          1              1              1
+gene_names_convereter_neg_pos        1              1              1
+hisat2_align                        18              2              2
+hisat2_index                         1              1              1
+matrix_creation                      1              1              1
+reverse_path                         1              1              1
+samtools_sort                       18              8              8
+stringtie_assembly                  18              8              8
+total                               83              1              8
 
 ```
 
