@@ -1,6 +1,6 @@
 # A Reproducible Snakemake-based Workflow for Project "Studying _Salmonella_ Gene Expression Dynamics in Response to Novobiocin"
 ## Project was performed as a part of studies in [Bioinformatics institute](https://bioinf.me/en) on program [Bioinformatics for Biologists](https://bioinf.me/en/education#!/tab/40660730-1) during spring semester 2022.
-<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Salmonella.png" width="500" height="500" align="middle">
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Salmonella.png" width="300" height="300">
 
 ## README content
 * [Introduction](#Introduction)
@@ -15,9 +15,7 @@
 * [Usefull References](#Usefull-References)
 * [Author and Acknowledgements](#Author-and-Acknowledgements)
 * [Feedback conracts](#Feedback)
-
-
-
+-----------------------------------------------------------------------------
 
 ## Intoduction
 
