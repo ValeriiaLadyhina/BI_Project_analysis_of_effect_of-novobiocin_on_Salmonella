@@ -16,7 +16,6 @@
 * [Usefull References](#Usefull-References)
 * [Author and Acknowledgements](#Author-and-Acknowledgements)
 * [Feedback conracts](#Feedback)
--
 
 ## Introduction
 
@@ -38,7 +37,7 @@
 ## Data Description
 #### Data is publicly available and can be found in paper of [Natalia Gogoleva _et. al_, 2020](https://www.sciencedirect.com/science/article/pii/S2352340920301918?via%3Dihub). 
 
-## Snakemake Pipeline Desciption
+## Snakemake Pipeline Description
 #### Snakemake pipeline consist of 15 number of rules:
 * [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) analysis of samples (SnakeMake Wrapper *v 1.5.0/bio/fastqc*)
 * [Hisat2](http://daehwankimlab.github.io/hisat2/) Index (*v 2.2.0*)
@@ -59,7 +58,7 @@
 ##### R markdown files will install automatically next packages during run of Snakemake pipeline:
 *__DESeq2, dplyr, ggplot2, gplots,clusterProfiler, WGCNA, knitr, KEGGREST,stringr__*
 
-##### The rest of used softwear vill be installed during creation of snakemake environment. All installed tools can be foud in file config.yaml.
+##### The rest of used softwear will be installed during creation of snakemake environment. All installed tools can be foud in file config.yaml.
 
 ## Installation of Snakemake
 #### Full installation description you can find on the [webpage of Snakemake](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
