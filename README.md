@@ -15,7 +15,7 @@
 * [Results](#Results)
 * [Usefull References](#Usefull-References)
 * [Author and Acknowledgements](#Author-and-Acknowledgements)
-* [Feedback conracts](#Feedback)
+* [Feedback contacts](#Feedback)
 -
 
 ## Introduction
@@ -39,7 +39,7 @@
 #### Data is publicly available and can be found in paper of [Natalia Gogoleva _et. al_, 2020](https://www.sciencedirect.com/science/article/pii/S2352340920301918?via%3Dihub). 
 
 ## Snakemake Pipeline Desciption
-#### Snakemake pipeline consist of ... number of rules:
+#### Snakemake pipeline consist of 15 number of rules:
 * [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) analysis of samples (SnakeMake Wrapper *v 1.5.0/bio/fastqc*)
 * [Hisat2](http://daehwankimlab.github.io/hisat2/) Index (*v 2.2.0*)
 * [Hisat2](http://daehwankimlab.github.io/hisat2/) Align (Snakemake wrapper *v 1.5.0/bio/hisat2/align*)
@@ -47,8 +47,19 @@
 * [StringTie](https://ccb.jhu.edu/software/stringtie/) assembly (*v 2.2.1)
 * Matrix creation by [prepDE.py3](https://ccb.jhu.edu/software/stringtie/dl/prepDE.py3) (Python3 script)
 * [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) (R Markdown)
-* Genes' names converter (Jupyter Notebook)
-* 
+* Genes' names converter neg _pos (Python script)
+* [KEGG](https://bioconductor.org/packages/release/bioc/html/KEGGREST.html)_[WGCNA](https://horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/) (R Markdown)
+* Genes' names converter modules (Python script)
+* KEGG modules (R Markdown)
+* Genes' names converter hubs (Python script)
+* KEGG hub (R Markdown)
+* Reverse path (Python script)
+* Final Report (R Markdown)
+
+##### R markdown files will install automatically next packages during run of Snakemake pipeline:
+*__DESeq2, dplyr, ggplot2, gplots,clusterProfiler, WGCNA, knitr, KEGGREST,stringr__*
+
+##### The rest of used softwear vill be installed during creation of snakemake environment. All installed tools can be foud in file config.yaml.
 
 ## Installation of Snakemake
 #### Full installation description you can find on the [webpage of Snakemake](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
@@ -103,7 +114,8 @@ cd Path/to/folder/snakemake
    * [Reference genome](http://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/022/165/GCF_000022165.1_ASM2216v1/GCF_000022165.1_ASM2216v1_genomic.fna.gz) 
    * Reference annotation of 
    * pheno.csv # file with description of classes of experimental data
-   * 
+   * File sorted_p_adj_genes.txt
+   * genefile.txt
 
 ```markdown
 snakemake --use-conda --cores all
