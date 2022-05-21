@@ -3,8 +3,19 @@
 ## README content
 * [Introduction](#Introduction)
 * [Background](#Background)
-* [Aim](#AIM)
+* [Aim](#Aim)
 * [Project Objectives](#Project-Objectives)
+* [Data Description](#Data-Description)
+* [Snakemake Pipeline Description](#Snakemake-Pipeline-Description)
+* [Installation of Snakemake](#Installation-of-Snakemake)
+  * [Few errors solutions](#Some-mistakes-solutions,-suggestions-and-explanations)
+* [Results](#Results)
+* [Usefull References](#Usefull-References)
+* [Author and Acknowledgements](#Author-and-Acknowledgements)
+* [Feedback conracts](#Feedback)
+
+
+
 ## Intoduction
 
 #### In this project we analysed publicly available [transcriptomic data](https://www.sciencedirect.com/science/article/pii/S2352340920301918#sec1)  obtained in time-series experiments on **_Salmonella enterica_ subsp. _enterica_ serovar Typhimurium str. 14028S** treated with different concentrations of antibiotic **novobiocin**.
@@ -37,7 +48,7 @@
 * Genes' names converter (Jupyter Notebook)
 * 
 
-## Instalation of Snakemake
+## Installation of Snakemake
 #### Full installation description you can find on the [webpage of Snakemake](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
 #### 1) Install a Conda-based Python3 distribution
 #### 2) Install [Mamba](https://github.com/mamba-org/mamba)
@@ -118,8 +129,7 @@ total                    76              1              8
 Select jobs to execute...
 
 ```
-## Repository map
-* 
+
 ## Results
 
 ## Usefull References
