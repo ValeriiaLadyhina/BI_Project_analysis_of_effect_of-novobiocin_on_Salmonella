@@ -4,11 +4,11 @@ configfile: "config.yaml"
 
 rule all:
     input:
-        html = expand("analysis/qc/fastqc/{sample}.html", sample=config["samples"]),
-        zip = expand("analysis/qc/fastqc/{sample}_fastqc.zip", sample=config["samples"]),
-        index_files = expand("analysis/index.{index}.ht2", index=config["indexes"]),
-        assembly  = expand("analysis/stringtie_assembly/{sample}/{sample}.gtf", sample=config["samples"]),
-        matrix = "gene_count_matrix.csv",
+        #html = expand("analysis/qc/fastqc/{sample}.html", sample=config["samples"]),
+        #zip = expand("analysis/qc/fastqc/{sample}_fastqc.zip", sample=config["samples"]),
+        #index_files = expand("analysis/index.{index}.ht2", index=config["indexes"]),
+        #assembly  = expand("analysis/stringtie_assembly/{sample}/{sample}.gtf", sample=config["samples"]),
+        #matrix = "gene_count_matrix.csv",
         deseq_report = "deseq.html"
 
 
@@ -89,7 +89,7 @@ rule matrix_creation:
 
 rule deseq:
     input:
-        "transcript_count_matrix.csv",
+        rules.matrix_creation.output.gene_file
     output:
         "deseq.html"
     conda:

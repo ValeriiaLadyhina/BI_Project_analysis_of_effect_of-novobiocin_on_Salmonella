@@ -15,7 +15,7 @@
 * [Usefull References](#Usefull-References)
 * [Author and Acknowledgements](#Author-and-Acknowledgements)
 * [Feedback conracts](#Feedback)
------------------------------------------------------------------------------
+-
 
 ## Intoduction
 
@@ -53,6 +53,17 @@
 #### Full installation description you can find on the [webpage of Snakemake](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
 #### 1) Install a Conda-based Python3 distribution
 #### 2) Install [Mamba](https://github.com/mamba-org/mamba)
+##### Download miniforge
+###### For OsX
+```markdown
+curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-pypy3-MacOSX-x86_64.sh"
+bash Mambaforge-pypy3-MacOSX-x86_64.sh
+```
+or
+```markdown
+wget "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-pypy3-MacOSX-x86_64.sh"
+bash Mambaforge-pypy3-MacOSX-x86_64.sh
+```
 ```markdown
 conda install -n base -c conda-forge mamba
 ```
