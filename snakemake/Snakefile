@@ -7,7 +7,15 @@ rule all:
         #index_files = expand("analysis/index.{index}.ht2", index=config["indexes"]),
         #assembly  = expand("analysis/stringtie_assembly/{sample}/{sample}.gtf", sample=config["samples"]),
         #matrix = "gene_count_matrix.csv",
-        deseq_report = "deseq.html"
+        #deseq_report = "deseq.html",
+        #New_positive_deg = "New_rna_positive_deg.txt"
+        #wgcna_report = "wgcna.html"
+        #New_yellow_result = "New_rna_yellow_result.txt"
+        #"KEGG.html"
+        #"New_rna_yellow_hub.txt"
+        #"KEGG_hub.html"
+        #"New_glycolysis_gluconeogenesis.txt"
+        "Final_report.html"
 
 
 rule fastqc:
@@ -88,11 +96,68 @@ rule deseq:
     script:
         "deseq.Rmd"
 
-#rule gene_names_convereter:
-#    output:
-#        "test.txt"
-#    log:
-#        # optional path to the processed notebook
-#        notebook="logs/notebooks/processed_notebook.ipynb"
-#    notebook:
-#        "scripts/hello.py.ipynb"
+rule gene_names_convereter_neg_pos:
+    input:
+        rules.deseq.output
+    output:
+        "New_rna_positive_deg.txt"
+    log:
+        notebook="logs/notebooks/processed_notebook.ipynb"
+    shell:
+        "python scripts/gene_name_converter_neg_pos.py"
+
+rule KEGG_WGCNA:
+    input:
+        rules.gene_names_convereter_neg_pos.output
+    output:
+        "wgcna.html"
+    script:
+        "wgcna.Rmd"
+
+rule gene_name_converter_modules:
+    input:
+        rules.KEGG_WGCNA.output
+    output:
+        "New_rna_yellow_result.txt"
+    shell:
+        "python scripts/gene_name_converter_modules.py"
+
+rule KEGG_modules:
+    input:
+        rules.gene_name_converter_modules.output
+    output:
+        "KEGG.html"
+    script:
+        "KEGG.Rmd"
+
+rule gene_name_converter_hubs:
+    input:
+        rules.KEGG_modules.output
+    output:
+        "New_rna_yellow_hub.txt"
+    shell:
+        "python scripts/gene_name_converter_hubs.py"
+
+rule KEGG_hub:
+    input:
+        rules.gene_name_converter_hubs.output
+    output:
+        "KEGG_hub.html"
+    script:
+        "KEGG_hub.Rmd"
+
+rule reverse_path:
+    input:
+        rules.KEGG_hub.output
+    output:
+        "New_glycolysis_gluconeogenesis.txt"
+    shell:
+        "python scripts/reverse_path.py"
+
+rule final_report:
+    input:
+        rules.reverse_path.output
+    output:
+        "Final_report.html"
+    script:
+        "Final_report.Rmd"

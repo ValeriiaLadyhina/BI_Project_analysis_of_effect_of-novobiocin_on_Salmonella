@@ -1,0 +1,226 @@
+---
+title: "KEGG and WGCNA"
+author: "Valeriia Ladyhina & Semyon Kupriyanov"
+date: "`r Sys.Date()`"
+output:  
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: lumen
+---
+# Introduction
+*This R Markdown is part of bigger pipeline on analysis of RNA seq data obtained in experiment on effects of different concentrations of antibiotic novobiocin on gene expression in __Salmonella enterica subsp. enterica serovar Typhimurium str. 14028S__. Analysis was performed on publicly available transciptomics data that can be found __[here]('https://www.sciencedirect.com/science/article/pii/S2352340920301918#sec1')__.*
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Installation of required packages
+*This part of pipeline includes few different packages, that have been installed on your computer, namely: __clusterProfiler, WGCNA, knitr__.*
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+requiredPackages = c('clusterProfiler','WGCNA','knitr')
+for(p in requiredPackages){
+  if(!require(p,character.only = TRUE)) install.packages(p, repos = "http://cran.us.r-project.org" )
+  library(p,character.only = TRUE)}
+set.seed(7)
+```
+# KEGG enrichment analysis
+*Negative DEG*
+```{r echo=FALSE, results='hold', message=FALSE, warning=FALSE}
+# Download transformed deg-lists
+deg_negative = read.table("New_rna_negative_deg.txt")
+deg_positive = read.table("New_rna_positive_deg.txt")
+
+# KEGG enrichmant analysis
+kegg_deg_negative <- enrichKEGG(gene = deg_negative$V1,
+                         organism  = 'seo',
+                         pvalueCutoff = 0.05)
+
+kegg_deg_positive <- enrichKEGG(gene = deg_positive$V1,
+                         organism  = 'seo',
+                         pvalueCutoff = 0.05)
+# Search results
+kable(head(kegg_deg_negative)) # Flagellar assembly # Oxidative phosphorylation
+# Glycolysis / Gluconeogenesis # Bacterial chemotaxis
+# Starch and sucrose metabolism
+
+```
+
+*Positive DEG*
+```{r echo=FALSE}
+kable(head(kegg_deg_positive)) 
+```
+
+
+```{r echo=FALSE}
+# Download the date
+df = read.table("norm-matrix-deseq2.txt", header = T, row.names = 1)
+df = as.data.frame(t(df))
+```
+```{r echo=FALSE, results='hide'}
+# Check the good genes
+gsg_df = goodSamplesGenes(df, verbose = 3);
+gsg_df$allOK
+if (!gsg_df$allOK)
+{
+  # Optionally, print the gene and sample names that were removed:
+  if (sum(!gsg_df$goodGenes)>0)
+    printFlush(paste("Removing genes:", paste(names(df)[!gsg_df$goodGenes], collapse = ", ")));
+  if (sum(!gsg_df$goodSamples)>0)
+    printFlush(paste("Removing samples:", paste(rownames(df)[!gsg_df$goodSamples], collapse = ", ")));
+  # Remove the offending genes and samples from the data:
+  df = df[gsg_df$goodSamples, gsg_df$goodGenes]
+}
+```
+
+# Sample clusterisation to detect outriers
+
+```{r echo=FALSE}
+# Make the samples clusterisation
+sampleTree = hclust(dist(df), method = "average");
+# Plot the sample tree: Open a graphic output window of size 12 by 9 inches
+plot(sampleTree, main = "Sample clustering to detect outliers", sub="", xlab="", cex.lab = 1.5,
+     cex.axis = 1.5, cex.main = 2)
+```
+
+*Added to clusters information regarding traits of data set*
+
+```{r echo=FALSE}
+# Download traits
+traitData = read.csv('data/pheno.csv', sep=";", row.names=1)
+# Samples clustering
+sampleTree2 = hclust(dist(df), method = "average")
+traitColors = numbers2colors(traitData, signed = F);
+plotDendroAndColors(sampleTree, traitData,
+                    groupLabels = names(traitData),
+                    main = "Sample dendrogram and trait heatmap")
+```
+```{r echo=FALSE, results='hide', warning=FALSE}
+# Pick soft threshold
+powers = c(1:20)
+cex1 = 0.8;
+# Call the network topology analysis function
+sft = pickSoftThreshold(df, powerVector = powers, verbose = 5)
+```
+*In this case we will use soft threashold in power 12*
+```{r echo=FALSE}
+plot(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
+     xlab="Soft Threshold (power)",ylab="Scale Free Topology Model Fit,signed R^2",type="n",
+     main = paste("Scale independence"));
+text(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
+     labels=powers,cex=cex1,col="red");
+# this line corresponds to using an R^2 cut-off of h
+abline(h=0.80,col="red")
+# Mean connectivity as a function of the soft-thresholding power
+plot(sft$fitIndices[,1], sft$fitIndices[,5],
+     xlab="Soft Threshold (power)",ylab="Mean Connectivity", type="n",
+     main = paste("Mean connectivity"))
+text(sft$fitIndices[,1], sft$fitIndices[,5], labels=powers, cex=cex1,col="red")
+```
+```{r echo=FALSE, results='hide'}
+# Build the NET
+net = blockwiseModules(df, power = 12,
+                       TOMType = "signed", minModuleSize = 30,
+                       reassignThreshold = 0, mergeCutHeight = 0.25,
+                       numericLabels = TRUE, pamRespectsDendro = FALSE,
+                       saveTOMs = TRUE,
+                       saveTOMFileBase = "typh_TOM",
+                       verbose = 3)
+
+table(net$colors) # 10 moduls + 1 zero
+```
+
+*Module clustering dendrogram* 
+
+```{r echo=FALSE}
+# Visualize
+mergedColors = labels2colors(net$colors)
+# Plot the dendrogram and the module colors underneath
+plotDendroAndColors(net$dendrograms[[1]], mergedColors[net$blockGenes[[1]]],
+                    "Module colors",
+                    dendroLabels = FALSE, hang = 0.03,
+                    addGuide = TRUE, guideHang = 0.05)
+
+
+# Some parametrs
+moduleLabels = net$colors
+moduleColors = labels2colors(net$colors)
+MEs = net$MEs;
+geneTree = net$dendrograms[[1]];
+save(MEs, moduleLabels, moduleColors, geneTree,
+     file = "wgcna.RData")
+```
+*Significance of modules and their correlation with traits using Spearman's correlation, we will count that resulta are significant if the are >0.7*
+
+```{r echo=FALSE, warning=FALSE}
+# Define modules significance and correlation with Traits
+
+# Define numbers of genes and samples
+nGenes = ncol(df);
+nSamples = nrow(df);
+# Recalculate MEs with color labels
+MEs0 = moduleEigengenes(df, moduleColors)$eigengenes
+MEs = orderMEs(MEs0)
+moduleTraitCor = cor(MEs, traitData, use = "p", method = "spearman");
+moduleTraitPvalue = corPvalueStudent(moduleTraitCor, nSamples);
+
+# Visual
+
+# Will display correlations and their p-values
+textMatrix = paste(signif(moduleTraitCor, 2), "\n(",
+                   signif(moduleTraitPvalue, 1), ")", sep = "");
+dim(textMatrix) = dim(moduleTraitCor)
+par(mar = c(6, 8.5, 3, 3));
+# Display the correlation values within a heatmap plot
+labeledHeatmap(Matrix = moduleTraitCor,
+               xLabels = names(traitData),
+               yLabels = names(MEs),
+               ySymbols = names(MEs),
+               colorLabels = FALSE,
+               colors = greenWhiteRed(50),
+               textMatrix = textMatrix,
+               setStdMargins = FALSE,
+               cex.text = 0.5,
+               zlim = c(-1,1),
+               main = paste("Module-trait relationships"))
+```
+*In our analysis we have five modules that are significant regarding treatment: brown, turquoise, blue, black, yellow; and two regarding time green and red*
+
+*Plot that reveals relationships between eigengenes and traits*
+
+```{r echo=FALSE}
+# Define variable weight containing the weight column of datTrait
+Treated = as.data.frame(traitData$Treated);
+names(Treated) = "Treated"
+# names (colors) of the modules
+modNames = substring(names(MEs), 3)
+geneModuleMembership = as.data.frame(cor(df, MEs, use = "p"));
+MMPvalue = as.data.frame(corPvalueStudent(as.matrix(geneModuleMembership), nSamples));
+names(geneModuleMembership) = paste("MM", modNames, sep="");
+names(MMPvalue) = paste("p.MM", modNames, sep="");
+geneTraitSignificance = as.data.frame(cor(df, Treated, use = "p", method = "spearman"));
+GSPvalue = as.data.frame(corPvalueStudent(as.matrix(geneTraitSignificance), nSamples));
+names(geneTraitSignificance) = paste("GS.", names(Treated), sep="");
+names(GSPvalue) = paste("p.GS.", names(Treated), sep="");
+
+# OK, Let's define significan modeles (cor>0.7)
+# yellow, green, turquoise, black, brown, blue, red
+
+colors_modules = c('yellow', 'green', 'turquoise', 
+                   'black', 'brown', 'blue', 'red')
+for (i in 1:length(colors_modules)){
+  write.table(names(df)[moduleColors==colors_modules[i]], 
+              file=paste0(colors_modules[i], "_result.txt"), 
+              sep="\t", col.names=NA, quote=FALSE)
+}
+
+# Recalculate module eigengenes
+MEs = moduleEigengenes(df, moduleColors)$eigengenes
+# Isolate weight from the clinical traits
+Treated = as.data.frame(traitData$Treated);
+names(Treated) = "Treated"
+# Add the weight to existing module eigengenes
+MET = orderMEs(cbind(MEs, Treated))
+# Plot the relationships among the eigengenes and the trait
+par(cex = 0.9)
+plotEigengeneNetworks(MET, "", marDendro = c(0,4,1,2), marHeatmap = c(3,4,1,2), cex.lab = 0.8, xLabelsAngle
+                      = 90)
+```

@@ -13,7 +13,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-# Instalation of required packages
+# Installation of required packages
 *This part of pipeline includes few different packages, that have been installed on your computer, namely: __DESeq2, dplyr, ggplot2, gplots__.*
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 requiredPackages = c('DESeq2', 'dplyr', 'ggplot2','gplots')
@@ -42,6 +42,14 @@ dds <- DESeqDataSetFromMatrix(countData = countData,
 # Run the default analysis for DESeq2 and generate results table
 dds <- DESeq(dds)
 res <- results(dds)
+# Sort by adjusted p-value and display
+(resOrdered <- res[order(res$padj), ])
+# Sort the results data frame by the padj and foldChange columns.
+sorted = res[with(res, order(padj, -log2FoldChange)), ]
+sorted.df = data.frame("id"=rownames(sorted),sorted)
+# Write the table out.
+write.table(sorted.df, file="result_deseq.txt", sep="\t", col.names=NA, quote=FALSE)
+```
 ```
 
 *Next step is normalization of counts and saving of the result into file __norm-matrix-deseq2.txt__*
@@ -112,7 +120,7 @@ heatmap.2(matrix_deg, scale = "row",
           trace="none", dendrogram = "both")
 ```
 
-*Negative and postive DEG were saved in files __negative_deg.txt__ and __positive_deg.txt__ respectively.*
+*Negative and positive DEG were saved in files __negative_deg.txt__ and __positive_deg.txt__ respectively.*
 
 ```{r echo=FALSE}
 # Write negative and positive DEG

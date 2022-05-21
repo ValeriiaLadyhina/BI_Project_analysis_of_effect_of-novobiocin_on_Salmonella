@@ -1,0 +1,261 @@
+---
+title: "KEGG"
+author: "Valeriia Ladyhina & Semyon Kupriyanov"
+date: "`r Sys.Date()`"
+output:  
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: lumen
+---
+# Introduction
+*This R Markdown is part of bigger pipeline on analysis of RNA seq data obtained in experiment on effects of different concentrations of antibiotic novobiocin on gene expression in __Salmonella enterica subsp. enterica serovar Typhimurium str. 14028S__. Analysis was performed on publicly available transciptomics data that can be found __[here]('https://www.sciencedirect.com/science/article/pii/S2352340920301918#sec1')__.*
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Installation of required packages
+*This part of pipeline includes few different packages, that have been installed on your computer, namely: __WGCNA,clusterProfiler, knitr__.*
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+requiredPackages = c('KEGGREST','stringr','WGCNA','clusterProfiler', 'knitr')
+for(p in requiredPackages){
+  if(!require(p,character.only = TRUE)) install.packages(p, repos = "http://cran.us.r-project.org" )
+  library(p,character.only = TRUE)}
+```
+
+*In this part we perform KEGG enrichment analysis of modules of interest*
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+#####Let's make amazing KEGG analysis
+yellow = read.table("New_rna_yellow_result.txt")
+red = read.table("New_rna_red_result.txt")
+black = read.table("New_rna_black_result.txt")
+green = read.table("New_rna_green_result.txt")
+turquoise = read.table("New_rna_turquoise_result.txt")
+brown = read.table("New_rna_brown_result.txt")
+blue = read.table("New_rna_blue_result.txt")
+
+
+kegg_yellow <- enrichKEGG(gene = yellow$V1,
+                          organism  = 'seo',
+                          pvalueCutoff = 0.05)
+
+kegg_red <- enrichKEGG(gene = red$V1,
+                       organism  = 'seo',
+                       pvalueCutoff = 0.05)
+
+kegg_black <- enrichKEGG(gene = black$V1,
+                         organism  = 'seo',
+                         pvalueCutoff = 0.05)
+
+kegg_green <- enrichKEGG(gene = green$V1,
+                         organism  = 'seo',
+                         pvalueCutoff = 0.05)
+
+kegg_turquoise <- enrichKEGG(gene = turquoise$V1,
+                             organism  = 'seo',
+                             pvalueCutoff = 0.05)
+
+kegg_blue <- enrichKEGG(gene = blue$V1,
+                        organism  = 'seo',
+                        pvalueCutoff = 0.05)
+
+kegg_brown <- enrichKEGG(gene = brown$V1,
+                         organism  = 'seo',
+                         pvalueCutoff = 0.05)
+```
+
+*First let's take a look on modules that were sighnificant in relation towards novobiocin treatment*
+
+*Module 1*
+
+```{r echo=FALSE}
+kable(head(kegg_turquoise)[2:6])
+
+```
+
+*Module 2*
+
+```{r echo=FALSE}
+kable(head(kegg_black)) 
+```
+
+*Module 3*
+
+```{r echo=FALSE}
+kable(head(kegg_yellow))
+```
+ 
+*Module 4*
+   
+```{r echo=FALSE}
+kable(head(kegg_brown))
+```
+*Module 5*
+
+```{r echo=FALSE}
+kable(head(kegg_blue))
+```
+*And now we will take a look on modules related to time*
+
+*Module 1*
+
+```{r echo=FALSE}
+kable(head(kegg_red)[2:6])
+```
+
+*Module 2*
+
+```{r echo=FALSE}
+kable(head(kegg_green)) 
+```
+
+*Now we will perform visualisation of involed KEGG paths and you will find results in your browser*
+
+```{r echo=FALSE}
+# Visualization of paths that have been found in both DEGs and modules associated with Treated 
+browseKEGG(kegg_black, 'seo02020')
+#
+browseKEGG(kegg_brown, 'seo00660')
+browseKEGG(kegg_brown, 'seo00053')
+browseKEGG(kegg_brown, 'seo01210')
+#
+browseKEGG(kegg_turquoise, 'seo00010')
+browseKEGG(kegg_turquoise, 'seo00520')
+```
+```{r echo=FALSE,message=FALSE,warning=FALSE, results='hide'}
+
+# Download the date
+df = read.table("norm-matrix-deseq2.txt", header = T, row.names = 1)
+df = as.data.frame(t(df))
+
+# Check the good genes
+gsg_df = goodSamplesGenes(df, verbose = 3);
+gsg_df$allOK
+if (!gsg_df$allOK)
+
+  # Optionally, print the gene and sample names that were removed:
+  if (sum(!gsg_df$goodGenes)>0)
+    printFlush(paste("Removing genes:", paste(names(df)[!gsg_df$goodGenes], collapse = ", ")));
+  if (sum(!gsg_df$goodSamples)>0)
+    printFlush(paste("Removing samples:", paste(rownames(df)[!gsg_df$goodSamples], collapse = ", ")));
+  # Remove the offending genes and samples from the data:
+  df = df[gsg_df$goodSamples, gsg_df$goodGenes]
+
+# Make the samples clusterisation
+sampleTree = hclust(dist(df), method = "average");
+
+traitData = read.csv('data/pheno.csv', sep=";", row.names=1)
+# Samples clustering
+sampleTree2 = hclust(dist(df), method = "average")
+traitColors = numbers2colors(traitData, signed = F);
+
+powers = c(1:20)
+cex1 = 0.8;
+# Call the network topology analysis function
+sft = pickSoftThreshold(df, powerVector = powers, verbose = 5)
+
+# Build the NET
+net = blockwiseModules(df, power = 12,
+                       TOMType = "signed", minModuleSize = 30,
+                       reassignThreshold = 0, mergeCutHeight = 0.25,
+                       numericLabels = TRUE, pamRespectsDendro = FALSE,
+                       saveTOMs = TRUE,
+                       saveTOMFileBase = "typh_TOM",
+                       verbose = 3)
+
+table(net$colors) # 10 moduls + 1 zero
+
+# Visualize
+mergedColors = labels2colors(net$colors)
+
+
+# Some parametrs
+moduleLabels = net$colors
+moduleColors = labels2colors(net$colors)
+MEs = net$MEs;
+geneTree = net$dendrograms[[1]];
+save(MEs, moduleLabels, moduleColors, geneTree,
+     file = "wgcna.RData")
+
+nGenes = ncol(df);
+nSamples = nrow(df);
+# Recalculate MEs with color labels
+MEs0 = moduleEigengenes(df, moduleColors)$eigengenes
+MEs = orderMEs(MEs0)
+moduleTraitCor = cor(MEs, traitData, use = "p", method = "spearman");
+moduleTraitPvalue = corPvalueStudent(moduleTraitCor, nSamples);
+
+# Visual
+
+# Will display correlations and their p-values
+textMatrix = paste(signif(moduleTraitCor, 2), "\n(",
+                   signif(moduleTraitPvalue, 1), ")", sep = "");
+dim(textMatrix) = dim(moduleTraitCor)
+par(mar = c(6, 8.5, 3, 3));
+
+# Define variable weight containing the weight column of datTrait
+Treated = as.data.frame(traitData$Treated);
+names(Treated) = "Treated"
+# names (colors) of the modules
+modNames = substring(names(MEs), 3)
+geneModuleMembership = as.data.frame(cor(df, MEs, use = "p"));
+MMPvalue = as.data.frame(corPvalueStudent(as.matrix(geneModuleMembership), nSamples));
+names(geneModuleMembership) = paste("MM", modNames, sep="");
+names(MMPvalue) = paste("p.MM", modNames, sep="");
+geneTraitSignificance = as.data.frame(cor(df, Treated, use = "p", method = "spearman"));
+GSPvalue = as.data.frame(corPvalueStudent(as.matrix(geneTraitSignificance), nSamples));
+names(geneTraitSignificance) = paste("GS.", names(Treated), sep="");
+names(GSPvalue) = paste("p.GS.", names(Treated), sep="");
+
+# OK, Let's define significan modeles (cor>0.7)
+# yellow, green, turquoise, black, brown, blue, red
+
+colors_modules = c('yellow', 'green', 'turquoise', 
+                   'black', 'brown', 'blue', 'red')
+for (i in 1:length(colors_modules)){
+  write.table(names(df)[moduleColors==colors_modules[i]], 
+              file=paste0(colors_modules[i], "_result.txt"), 
+              sep="\t", col.names=NA, quote=FALSE)
+}
+
+# Recalculate module eigengenes
+MEs = moduleEigengenes(df, moduleColors)$eigengenes
+# Isolate weight from the clinical traits
+Treated = as.data.frame(traitData$Treated);
+names(Treated) = "Treated"
+# Add the weight to existing module eigengenes
+MET = orderMEs(cbind(MEs, Treated))
+```
+
+```{r echo=FALSE}
+write.table(rownames(geneModuleMembership[which(geneModuleMembership$MMblack > 0.9),]), 
+            file="black_hub.txt", 
+            sep="\t", col.names=NA, quote=FALSE)
+
+write.table(rownames(geneModuleMembership[which(geneModuleMembership$MMbrown > 0.9),]), 
+            file="brown_hub.txt", 
+            sep="\t", col.names=NA, quote=FALSE)
+
+write.table(rownames(geneModuleMembership[which(geneModuleMembership$MMyellow > 0.9),]), 
+            file="yellow_hub.txt", 
+            sep="\t", col.names=NA, quote=FALSE)
+
+write.table(rownames(geneModuleMembership[which(geneModuleMembership$MMturquoise > 0.9),]), 
+            file="turquoise_hub.txt", 
+            sep="\t", col.names=NA, quote=FALSE)
+
+
+# Time hubs
+write.table(rownames(geneModuleMembership[which(geneModuleMembership$MMgreen > 0.9),]), 
+            file="green_hub.txt", 
+            sep="\t", col.names=NA, quote=FALSE)
+
+write.table(rownames(geneModuleMembership[which(geneModuleMembership$MMred > 0.9),]), 
+            file="red_hub.txt", 
+            sep="\t", col.names=NA, quote=FALSE)
+
+write.table(rownames(geneModuleMembership[which(geneModuleMembership$MMblue > 0.9),]), 
+            file="blue_hub.txt", 
+            sep="\t", col.names=NA, quote=FALSE)
+```
+

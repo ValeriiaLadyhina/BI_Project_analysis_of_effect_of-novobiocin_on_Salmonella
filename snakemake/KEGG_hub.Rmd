@@ -1,0 +1,321 @@
+---
+title: "KEGG_hub"
+author: "Valeriia Ladyhina & Semyon Kupriyanov"
+date: "`r Sys.Date()`"
+output:  
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: lumen
+---
+# Introduction
+*This R Markdown is part of bigger pipeline on analysis of RNA seq data obtained in experiment on effects of different concentrations of antibiotic novobiocin on gene expression in __Salmonella enterica subsp. enterica serovar Typhimurium str. 14028S__. Analysis was performed on publicly available transciptomics data that can be found __[here]('https://www.sciencedirect.com/science/article/pii/S2352340920301918#sec1')__.*
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Installation of required packages
+*This part of pipeline includes few different packages, that have been installed on your computer, namely: __WGCNA,clusterProfiler, knitr, dplyr, stringr,ggplot2__.*
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+requiredPackages = c('KEGGREST','stringr','WGCNA','clusterProfiler', 'knitr','dplyr','ggplot2')
+for(p in requiredPackages){
+  if(!require(p,character.only = TRUE)) install.packages(p, repos = "http://cran.us.r-project.org" )
+  library(p,character.only = TRUE)}
+```
+```{r echo=FALSE,message=FALSE,warning=FALSE, results='hide'}
+# Download the date
+df = read.table("norm-matrix-deseq2.txt", header = T, row.names = 1)
+df = as.data.frame(t(df))
+
+# Check the good genes
+gsg_df = goodSamplesGenes(df, verbose = 3);
+gsg_df$allOK
+if (!gsg_df$allOK)
+
+  # Optionally, print the gene and sample names that were removed:
+  if (sum(!gsg_df$goodGenes)>0)
+    printFlush(paste("Removing genes:", paste(names(df)[!gsg_df$goodGenes], collapse = ", ")));
+  if (sum(!gsg_df$goodSamples)>0)
+    printFlush(paste("Removing samples:", paste(rownames(df)[!gsg_df$goodSamples], collapse = ", ")));
+  # Remove the offending genes and samples from the data:
+  df = df[gsg_df$goodSamples, gsg_df$goodGenes]
+
+# Make the samples clusterisation
+sampleTree = hclust(dist(df), method = "average");
+
+traitData = read.csv('data/pheno.csv', sep=";", row.names=1)
+# Samples clustering
+sampleTree2 = hclust(dist(df), method = "average")
+traitColors = numbers2colors(traitData, signed = F);
+
+powers = c(1:20)
+cex1 = 0.8;
+# Call the network topology analysis function
+sft = pickSoftThreshold(df, powerVector = powers, verbose = 5)
+
+# Build the NET
+net = blockwiseModules(df, power = 12,
+                       TOMType = "signed", minModuleSize = 30,
+                       reassignThreshold = 0, mergeCutHeight = 0.25,
+                       numericLabels = TRUE, pamRespectsDendro = FALSE,
+                       saveTOMs = TRUE,
+                       saveTOMFileBase = "typh_TOM",
+                       verbose = 3)
+
+table(net$colors) # 10 moduls + 1 zero
+
+# Visualize
+mergedColors = labels2colors(net$colors)
+
+
+# Some parametrs
+moduleLabels = net$colors
+moduleColors = labels2colors(net$colors)
+MEs = net$MEs;
+geneTree = net$dendrograms[[1]];
+save(MEs, moduleLabels, moduleColors, geneTree,
+     file = "wgcna.RData")
+
+nGenes = ncol(df);
+nSamples = nrow(df);
+# Recalculate MEs with color labels
+MEs0 = moduleEigengenes(df, moduleColors)$eigengenes
+MEs = orderMEs(MEs0)
+moduleTraitCor = cor(MEs, traitData, use = "p", method = "spearman");
+moduleTraitPvalue = corPvalueStudent(moduleTraitCor, nSamples);
+
+# Visual
+
+# Will display correlations and their p-values
+textMatrix = paste(signif(moduleTraitCor, 2), "\n(",
+                   signif(moduleTraitPvalue, 1), ")", sep = "");
+dim(textMatrix) = dim(moduleTraitCor)
+par(mar = c(6, 8.5, 3, 3));
+
+# Define variable weight containing the weight column of datTrait
+Treated = as.data.frame(traitData$Treated);
+names(Treated) = "Treated"
+# names (colors) of the modules
+modNames = substring(names(MEs), 3)
+geneModuleMembership = as.data.frame(cor(df, MEs, use = "p"));
+MMPvalue = as.data.frame(corPvalueStudent(as.matrix(geneModuleMembership), nSamples));
+names(geneModuleMembership) = paste("MM", modNames, sep="");
+names(MMPvalue) = paste("p.MM", modNames, sep="");
+geneTraitSignificance = as.data.frame(cor(df, Treated, use = "p", method = "spearman"));
+GSPvalue = as.data.frame(corPvalueStudent(as.matrix(geneTraitSignificance), nSamples));
+names(geneTraitSignificance) = paste("GS.", names(Treated), sep="");
+names(GSPvalue) = paste("p.GS.", names(Treated), sep="");
+
+# OK, Let's define significan modeles (cor>0.7)
+# yellow, green, turquoise, black, brown, blue, red
+
+colors_modules = c('yellow', 'green', 'turquoise', 
+                   'black', 'brown', 'blue', 'red')
+for (i in 1:length(colors_modules)){
+  write.table(names(df)[moduleColors==colors_modules[i]], 
+              file=paste0(colors_modules[i], "_result.txt"), 
+              sep="\t", col.names=NA, quote=FALSE)
+}
+
+# Recalculate module eigengenes
+MEs = moduleEigengenes(df, moduleColors)$eigengenes
+# Isolate weight from the clinical traits
+Treated = as.data.frame(traitData$Treated);
+names(Treated) = "Treated"
+# Add the weight to existing module eigengenes
+MET = orderMEs(cbind(MEs, Treated))
+```
+
+```{r echo=FALSE}
+# Download huns with transformed names
+yellow_hub = read.table("New_rna_yellow_hub.txt")
+red_hub = read.table("New_rna_red_hub.txt")
+black_hub = read.table("New_rna_black_hub.txt")
+green_hub = read.table("New_rna_green_hub.txt")
+turquoise_hub = read.table("New_rna_turquoise_hub.txt")
+brown_hub = read.table("New_rna_brown_hub.txt")
+blue_hub = read.table("New_rna_blue_hub.txt")
+```
+
+*KEGG analysis of treated hubs*
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# KEGG analysis of Treated hubs
+kegg_brown_hub = enrichKEGG(gene = brown_hub$V1,
+                            organism  = 'seo',
+                            pvalueCutoff = 0.05)
+kable(head(kegg_brown_hub))
+# C5-Branched dibasic acid metabolism
+# Valine, leucine and isoleucine biosynthesis
+# 2-Oxocarboxylic acid metabolism
+# Biosynthesis of amino acids
+
+kegg_black_hub = enrichKEGG(gene = black_hub$V1,
+                            organism  = 'seo',
+                            pvalueCutoff = 0.05)
+kable(head(kegg_black_hub))
+# Two-component system
+
+kegg_yellow_hub = enrichKEGG(gene = yellow_hub$V1,
+                             organism  = 'seo',
+                             pvalueCutoff = 0.05)
+kable(head(kegg_yellow_hub))
+#Lipopolysaccharide biosynthesis
+
+kegg_turquoise_hub = enrichKEGG(gene = turquoise_hub$V1,
+                                organism  = 'seo',
+                                pvalueCutoff = 0.05)
+kable(head(kegg_turquoise_hub))
+# Pyruvate metabolism
+#  Microbial metabolism in diverse environments
+# Citrate cycle (TCA cycle)
+#  Glycolysis / Gluconeogenesis
+# ABC transporters
+# Carbon metabolism
+```
+
+*Now we will save pathways of interest based on WGCNA analysis related to treatment with novobiocin*
+
+```{r echo=FALSE}
+# Next we choose pathways from DESeq2 and WGCNA Treated modules
+
+# Time course vizual
+kegg_black_hub[1]$geneID # Two-component system
+
+kegg_brown_hub[1]$geneID # C5-Branched dibasic acid metabolism
+
+kegg_brown_hub[3]$geneID # 2-Oxocarboxylic acid metabolism
+
+kegg_turquoise_hub[4]$geneID # Glycolysis / Gluconeogenesis
+
+two_component_system = strsplit(kegg_black_hub[1]$geneID, "/")[[1]]
+c5_branched_dibasic_acid_metabolism = strsplit(kegg_brown_hub[1]$geneID, "/")[[1]]
+oxocarboxylic_acid_metabolism = strsplit(kegg_brown_hub[3]$geneID, "/")[[1]]
+glycolysis_gluconeogenesis = strsplit(kegg_turquoise_hub[4]$geneID, "/")[[1]]
+
+write.table(two_component_system, 
+            file="two_component_system.txt", 
+            sep="\t", col.names=NA, quote=FALSE)
+
+write.table(c5_branched_dibasic_acid_metabolism, 
+            file="c5_branched_dibasic_acid_metabolism.txt", 
+            sep="\t", col.names=NA, quote=FALSE)
+
+write.table(oxocarboxylic_acid_metabolism, 
+            file="oxocarboxylic_acid_metabolism.txt", 
+            sep="\t", col.names=NA, quote=FALSE)
+
+write.table(glycolysis_gluconeogenesis, 
+            file="glycolysis_gluconeogenesis.txt", 
+            sep="\t", col.names=NA, quote=FALSE)
+```
+
+*Visualisation of modules eigenes*
+
+```{r echo=FALSE}
+
+# MODULES EIGENES VISUALISATION
+# Treated modules
+me_tr = MEs[c('MEblack', 'MEbrown', 'MEyellow', 'MEturquoise')]
+me_tr$Time = c(10, 10, 10,
+                   20, 20, 20,
+                   60, 60, 60,
+                   10, 10, 10,
+                   20, 20, 20,
+                   60, 60, 60)
+me_tr$Treated = c(1, 1, 1,
+                      1, 1, 1,
+                      1, 1, 1,
+                      0, 0, 0,
+                      0, 0, 0,
+                      0, 0, 0)
+me_tr$Treated = factor(me_tr$Treated)
+me_tr = me_tr %>% 
+  group_by(Treated, Time) %>% 
+  summarise_all(funs(mean))
+
+
+ggplot(me_tr, aes(x=Time, y=MEblack, col=Treated))+
+  geom_line()+
+  theme_light()
+ggplot(me_tr, aes(x=Time, y=MEbrown, col=Treated))+
+  geom_line()+
+  theme_light()
+ggplot(me_tr, aes(x=Time, y=MEyellow, col=Treated))+
+  geom_line()+
+  theme_light()
+ggplot(me_tr, aes(x=Time, y=MEturquoise, col=Treated))+
+  geom_line()+
+  theme_light()
+
+# Time modules
+me_ti = MEs[c('MEgreen', 'MEred', 'MEblue')]
+me_ti$Time = c(10, 10, 10,
+               20, 20, 20,
+               60, 60, 60,
+               10, 10, 10,
+               20, 20, 20,
+               60, 60, 60)
+me_ti$Treated = c(1, 1, 1,
+                  1, 1, 1,
+                  1, 1, 1,
+                  0, 0, 0,
+                  0, 0, 0,
+                  0, 0, 0)
+me_ti$Treated = factor(me_ti$Treated)
+me_ti = me_ti %>% 
+  group_by(Treated, Time) %>% 
+  summarise_all(funs(mean))
+
+ggplot(me_ti, aes(x=Time, y=MEred, col=Treated))+
+  geom_line()+
+  theme_light()
+ggplot(me_ti, aes(x=Time, y=MEgreen, col=Treated))+
+  geom_line()+
+  theme_light()
+ggplot(me_ti, aes(x=Time, y=MEblue, col=Treated))+
+  geom_line()+
+  theme_light()
+```
+
+*Visualisation of pathways'genes by their PC1*
+
+```{r echo=FALSE}
+# We will visualise pathway's genes by their PC1
+
+# visual function
+get_dynamic_graph = function(path_to, c=-1, name="Pathway"){
+  c5 = read.table(path_to)
+  sub_c5 = df[,c5$V1]
+  colnames(sub_c5) = sapply(colnames(sub_c5),
+                            function(x) strsplit(x, "-")[[1]][2])
+  sub_c5$Time = c(10, 10, 10,
+                  20, 20, 20,
+                  60, 60, 60,
+                  10, 10, 10,
+                  20, 20, 20,
+                  60, 60, 60)
+  
+  sub_c5$Treated = c(1, 1, 1,
+                     1, 1, 1,
+                     1, 1, 1,
+                     0, 0, 0,
+                     0, 0, 0,
+                     0, 0, 0)
+  sub_c5$Treated = factor(sub_c5$Treated)
+  # PCA
+  pca_sub_c5 <- prcomp(scale(sub_c5[-c(ncol(sub_c5)-1,ncol(sub_c5))]))
+  #summary(pca_sub_tcs)
+  sub_c5$PC1 <- (data.frame(predict(pca_sub_c5, 
+                                    newdata = sub_c5[-c(ncol(sub_c5)-1,
+                                                        ncol(sub_c5))]))$PC1)*(c)
+  
+  sub_c5_tr = sub_c5 %>% 
+    group_by(Treated, Time) %>% 
+    summarise_all(funs(mean))
+  
+  ggplot(sub_c5_tr, aes(x=Time, y=PC1, col=Treated))+
+    geom_line()+
+    ggtitle(name)+
+    theme_light()
+}
+```
