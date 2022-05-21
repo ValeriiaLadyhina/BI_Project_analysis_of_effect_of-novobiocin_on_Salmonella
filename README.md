@@ -41,7 +41,7 @@
 #### The provided dataset consists from RNA-seq reads obtained from samples of _S. enterica_ cultures treated with novobiocin at concentrations of 100 and 500 μg per mL, and untreated cultures. These reads were already filtered using [BBDuk (v. 37.23)](http://jgi.doe.gov/data-and-tools/bb-tools/). In our project we performed analysis only on reads from untreated culture and with addition of 500 μg per mL of novobiocin at three different timepoints: 10, 20 and 60 min.
 
 ## Snakemake Pipeline Desciption
-#### Snakemake pipeline consist of 15 number of rules:
+#### Snakemake pipeline consist of 15 rules:
 * [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) analysis of samples (SnakeMake Wrapper *v 1.5.0/bio/fastqc*)
 * [Hisat2](http://daehwankimlab.github.io/hisat2/) Index (*v 2.2.0*)
 * [Hisat2](http://daehwankimlab.github.io/hisat2/) Align (Snakemake wrapper *v 1.5.0/bio/hisat2/align*)
