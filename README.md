@@ -36,6 +36,7 @@
 #### 5. [Wopper](https://wopper.ba.itb.cnr.it) based visualisation of moduls of interest based on results of WGCNA analysis;
 #### 6. develop a reproducible workflow for transcriptomic data analysis based on [Snakemake pipeline](https://snakemake.readthedocs.io/en/stable/).
 
+## Data Description
 #### Data is publicly available and can be found in paper of [Natalia Gogoleva _et. al_, 2020](https://www.sciencedirect.com/science/article/pii/S2352340920301918?via%3Dihub). 
 #### The provided dataset consists from RNA-seq reads obtained from samples of _S. enterica_ cultures treated with novobiocin at concentrations of 100 and 500 μg per mL, and untreated cultures. These reads were already filtered using [BBDuk (v. 37.23)](http://jgi.doe.gov/data-and-tools/bb-tools/). In our project we performed analysis only on reads from untreated culture and with addition of 500 μg per mL of novobiocin at three different timepoints: 10, 20 and 60 min.
 
