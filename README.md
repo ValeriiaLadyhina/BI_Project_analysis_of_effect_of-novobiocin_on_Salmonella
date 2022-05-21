@@ -175,6 +175,8 @@ total                               83              1              8
 ### Additional analysis of the AT composition
 ##### Analysis of the AT-composition of the studied nodal genes; presented in a separate directory "AT_composition". The course of the analysis is written in the AT-composition notebook. Also in the directory is an additional file sequence.txt required for analysis (preprocessed file obtained from the annotation).
 
+### The result of Snakemake is Final_report.html file and opened in your browser maps of pathes of interest obtained via KEGG. In the results folder there is example of such file.
+
 ## Usefull References
 * [Mölder F, Jablonski KP, Letcher B et al. Sustainable data analysis with Snakemake [version 2; peer review: 2 approved]. F1000Research 2021, 10:33](https://doi.org/10.12688/f1000research.29032.2)
 * [Kim, D., Paggi, J.M., Park, C. et al. Graph-based genome alignment and genotyping with HISAT2 and HISAT-genotype. Nat Biotechnol 37, 907–915 (2019)](https://www.nature.com/articles/s41587-019-0201-4)
