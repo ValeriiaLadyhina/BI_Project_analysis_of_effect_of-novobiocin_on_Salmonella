@@ -159,6 +159,9 @@ total                               83              1              8
 ## Results
 #### Description of project results can be found in presentation in folder results
 
+### Additional analysis of the AT composition
+##### Analysis of the AT-composition of the studied nodal genes; presented in a separate directory "AT_composition". The course of the analysis is written in the AT-composition notebook. Also in the directory is an additional file sequence.txt required for analysis (preprocessed file obtained from the annotation).
+
 ## Usefull References
 *  [Mölder F, Jablonski KP, Letcher B et al. Sustainable data analysis with Snakemake [version 2; peer review: 2 approved]. F1000Research 2021, 10:33](https://doi.org/10.12688/f1000research.29032.2)
 
