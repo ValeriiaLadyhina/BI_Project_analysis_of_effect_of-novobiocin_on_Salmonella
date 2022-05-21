@@ -22,6 +22,8 @@
 #### In this project we analysed publicly available [transcriptomic data](https://www.sciencedirect.com/science/article/pii/S2352340920301918#sec1)  obtained in time-series experiments on **_Salmonella enterica_ subsp. _enterica_ serovar Typhimurium str. 14028S** treated with different concentrations of antibiotic **novobiocin**.
 
 ## Background
+#### DNA superspiralization is an important mechanism of gene regulation in bacteria and superspiralization alteration, for instance, in response to antibiotics can change gene expression levels. Antibiotics of aminocoumarin class, like novobiocin, are able to change both superspiralization of genomic DNA and expression of genes responding to superspiralization levels. The object of the study is _Salmonella enterica_, bacterium largely resistant to novobiocin and DNA superspiralization alterations in general. Here we aim to analyze gene expression changes in _Salmonella_ cultures grown on media with varying concentrations of antibiotics and to identify clusters of coexpressing genes.
+
 
 ## Aim
 #### _To investigate effects of novobiocin on gene expression in **_Salmonella enterica_ subsp. _enterica_ serovar Typhimurium str. 14028S**._
@@ -171,7 +173,15 @@ total                               83              1              8
 #### Description of project results can be found in presentation in folder results
 
 ## Usefull References
-*  [Mölder F, Jablonski KP, Letcher B et al. Sustainable data analysis with Snakemake [version 2; peer review: 2 approved]. F1000Research 2021, 10:33](https://doi.org/10.12688/f1000research.29032.2)
+* [Mölder F, Jablonski KP, Letcher B et al. Sustainable data analysis with Snakemake [version 2; peer review: 2 approved]. F1000Research 2021, 10:33](https://doi.org/10.12688/f1000research.29032.2)
+* [Kim, D., Paggi, J.M., Park, C. et al. Graph-based genome alignment and genotyping with HISAT2 and HISAT-genotype. Nat Biotechnol 37, 907–915 (2019)](https://www.nature.com/articles/s41587-019-0201-4)
+* [Love MI, Huber W, Anders S (2014). “Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2.” Genome Biology, 15, 550. doi: 10.1186/s13059-014-0550-8.](https://doi.org/10.1186/s13059-014-0550-8)
+* [Puccio, S., Grillo, G., Licciulli, F., Severgnini, M., Liuni, S., Bicciato, S., Peano, C. (2017). WoPPER: Web server for Position Related data analysis of gene Expression in Prokaryotes. Nucleic Acids Research, 45(W1), W109–W115.](https://academic.oup.com/nar/article/45/W1/W109/3782601)
+* [Zhang B and Horvath S (2005) A General Framework for Weighted Gene Co-Expression Network Analysis, Statistical Applications in Genetics and Molecular Biology: Vol. 4: No. 1, Article 17 PMID: 16646834](https://www.degruyter.com/document/doi/10.2202/1544-6115.1128/html)
+* [Twelve years of SAMtools and BCFtools Petr Danecek, James K Bonfield, Jennifer Liddle, John Marshall, Valeriu Ohan, Martin O Pollard, Andrew Whitwham, Thomas Keane, Shane A McCarthy, Robert M Davies, Heng Li GigaScience, Volume 10, Issue 2, February 2021, giab008, https://doi.org/10.1093/gigascience/giab008](https://academic.oup.com/gigascience/article/10/2/giab008/6137722?login=false)
+* [Kovaka S, Zimin AV, Pertea GM, Razaghi R, Salzberg SL, Pertea M Transcriptome assembly from long-read RNA-seq alignments with StringTie2, Genome Biology 20, 278 (2019), doi:10.1186/s13059-019-1910-1](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1910-1)
+* [Muskhelishvili G, Forquet R, Reverchon S, Meyer S, Nasser W. Coherent Domains of Transcription Coordinate Gene Expression During Bacterial Growth and Adaptation. Microorganisms. 2019 Dec 13;7(12):694. doi: 10.3390/microorganisms7120694. PMID: 31847191; PMCID: PMC6956064.](https://pubmed.ncbi.nlm.nih.gov/31847191/)
+
 
 ## Authors and Acknowledgements
 #### Students
