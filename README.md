@@ -54,7 +54,6 @@
 #### 1) Install a Conda-based Python3 distribution
 #### 2) Install [Mamba](https://github.com/mamba-org/mamba)
 ##### Download miniforge
-###### For OsX
 ```markdown
 curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-pypy3-MacOSX-x86_64.sh"
 bash Mambaforge-pypy3-MacOSX-x86_64.sh
@@ -64,13 +63,14 @@ or
 wget "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-pypy3-MacOSX-x86_64.sh"
 bash Mambaforge-pypy3-MacOSX-x86_64.sh
 ```
+##### Install mamba
 ```markdown
 conda install -n base -c conda-forge mamba
 ```
 #### 3) Create snakemake environment
 ```markdown
 conda activate base
-mamba create -c conda-forge -c bioconda -n snakemake snakemake
+mamba env create --name snakemake --file environment.yaml
 ```
 - To delete environment
 ```markdown
