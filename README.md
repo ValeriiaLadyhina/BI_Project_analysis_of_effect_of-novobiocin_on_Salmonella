@@ -4,7 +4,7 @@
 * [Introduction](#Introduction)
 * [Background](#Background)
 * [Aim](#AIM)
-* [Project Objectives](#Project_Objectives)
+* [Project Objectives](#Project-Objectives)
 ## Intoduction
 
 #### In this project we analysed publicly available [transcriptomic data](https://www.sciencedirect.com/science/article/pii/S2352340920301918#sec1)  obtained in time-series experiments on **_Salmonella enterica_ subsp. _enterica_ serovar Typhimurium str. 14028S** treated with different concentrations of antibiotic **novobiocin**.
