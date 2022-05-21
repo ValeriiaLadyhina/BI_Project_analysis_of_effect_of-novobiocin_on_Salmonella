@@ -139,7 +139,7 @@ kable(head(kegg_deg_negative)) # Flagellar assembly # Oxidative phosphorylation
 ```
 
 *Positive DEG*
-```{r echo=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 kable(head(kegg_deg_positive)) 
 ```
 
@@ -194,7 +194,7 @@ cex1 = 0.8;
 # Call the network topology analysis function
 sft = pickSoftThreshold(df, powerVector = powers, verbose = 5)
 ```
-*In this case we will use soft threashold in power 12*
+*In this case we will use soft threshold in power 12*
 ```{r echo=FALSE}
 plot(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
      xlab="Soft Threshold (power)",ylab="Scale Free Topology Model Fit,signed R^2",type="n",
@@ -405,19 +405,8 @@ kable(head(kegg_red)[2:6])
 kable(head(kegg_green)) 
 ```
 
-*Now we will perform visualisation of involed KEGG paths and you will find results in your browser*
+*Now we will perform visualization of involved KEGG paths and you will find results in your browser*
 
-```{r echo=FALSE}
-# Visualization of paths that have been found in both DEGs and modules associated with Treated 
-browseKEGG(kegg_black, 'seo02020')
-#
-browseKEGG(kegg_brown, 'seo00660')
-browseKEGG(kegg_brown, 'seo00053')
-browseKEGG(kegg_brown, 'seo01210')
-#
-browseKEGG(kegg_turquoise, 'seo00010')
-browseKEGG(kegg_turquoise, 'seo00520')
-```
 ```{r echo=FALSE,message=FALSE,warning=FALSE, results='hide'}
 
 # Download the date
@@ -523,37 +512,6 @@ names(Treated) = "Treated"
 MET = orderMEs(cbind(MEs, Treated))
 ```
 
-```{r echo=FALSE}
-write.table(rownames(geneModuleMembership[which(geneModuleMembership$MMblack > 0.9),]), 
-            file="black_hub.txt", 
-            sep="\t", col.names=NA, quote=FALSE)
-
-write.table(rownames(geneModuleMembership[which(geneModuleMembership$MMbrown > 0.9),]), 
-            file="brown_hub.txt", 
-            sep="\t", col.names=NA, quote=FALSE)
-
-write.table(rownames(geneModuleMembership[which(geneModuleMembership$MMyellow > 0.9),]), 
-            file="yellow_hub.txt", 
-            sep="\t", col.names=NA, quote=FALSE)
-
-write.table(rownames(geneModuleMembership[which(geneModuleMembership$MMturquoise > 0.9),]), 
-            file="turquoise_hub.txt", 
-            sep="\t", col.names=NA, quote=FALSE)
-
-
-# Time hubs
-write.table(rownames(geneModuleMembership[which(geneModuleMembership$MMgreen > 0.9),]), 
-            file="green_hub.txt", 
-            sep="\t", col.names=NA, quote=FALSE)
-
-write.table(rownames(geneModuleMembership[which(geneModuleMembership$MMred > 0.9),]), 
-            file="red_hub.txt", 
-            sep="\t", col.names=NA, quote=FALSE)
-
-write.table(rownames(geneModuleMembership[which(geneModuleMembership$MMblue > 0.9),]), 
-            file="blue_hub.txt", 
-            sep="\t", col.names=NA, quote=FALSE)
-```
 ```{r echo=FALSE}
 # Download huns with transformed names
 yellow_hub = read.table("New_rna_yellow_hub.txt")
