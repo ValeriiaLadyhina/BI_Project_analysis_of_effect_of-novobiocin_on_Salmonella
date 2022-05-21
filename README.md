@@ -10,6 +10,7 @@
 * [Data Description](#Data-Description)
 * [Snakemake Pipeline Description](#Snakemake-Pipeline-Description)
 * [Installation of Snakemake](#Installation-of-Snakemake)
+* [Start running Snakemake pipeline](#Start-Snakemake-pipeline)
   * [Few errors solutions](#Some-mistakes-solutions,-suggestions-and-explanations)
 * [Results](#Results)
 * [Usefull References](#Usefull-References)
@@ -94,11 +95,20 @@ snakemake --help
 ```markdown
 cd Path/to/folder/snakemake
 ```
-#### 7) Start snakemake 
+## Start Snakemake pipeline
+#### Data
+##### RNA seq data
+1) Download needed RNA seq data sets to folder "snakemake/data/reads".
+2) Make sure that you have all needed files to run pipeline in folder "snakemake/data:
+   * [Reference genome](http://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/022/165/GCF_000022165.1_ASM2216v1/GCF_000022165.1_ASM2216v1_genomic.fna.gz) 
+   * Reference annotation of 
+   * pheno.csv # file with description of classes of experimental data
+   * 
+
 ```markdown
 snakemake --use-conda --cores all
 ```
-#### 8) Some mistakes solutions, suggestions and explanations
+####  Some mistakes solutions, suggestions and explanations
 ##### Possible mistakes and their solutions
 ##### LockException
 ```
@@ -143,6 +153,7 @@ Select jobs to execute...
 ```
 
 ## Results
+#### Description of project results can be found in presentation in folder results
 
 ## Usefull References
 *  [Mölder F, Jablonski KP, Letcher B et al. Sustainable data analysis with Snakemake [version 2; peer review: 2 approved]. F1000Research 2021, 10:33](https://doi.org/10.12688/f1000research.29032.2)
