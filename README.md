@@ -14,6 +14,7 @@
 * [Author and Acknowledgements](#Author-and-Acknowledgements)
 * [Feedback conracts](#Feedback)
 
+![alt text](https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Salmonella.png)
 
 
 ## Intoduction
