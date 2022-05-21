@@ -15,7 +15,7 @@
 * [Results](#Results)
 * [Usefull References](#Usefull-References)
 * [Author and Acknowledgements](#Author-and-Acknowledgements)
-* [Feedback conracts](#Feedback)
+* [Feedback contacts](#Feedback)
 -
 
 ## Introduction
