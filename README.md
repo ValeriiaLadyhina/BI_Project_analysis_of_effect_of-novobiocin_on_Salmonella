@@ -37,7 +37,7 @@
 #### 6. develop a reproducible workflow for transcriptomic data analysis based on [Snakemake pipeline](https://snakemake.readthedocs.io/en/stable/).
 
 ## Data Description
-#### Data is publicly available and can be found in paper of [Natalia Gogoleva _et. al_, 2020](). 
+#### Data is publicly available and can be found in paper of [Natalia Gogoleva _et. al_, 2020](https://www.sciencedirect.com/science/article/pii/S2352340920301918?via%3Dihub). 
 
 ## Snakemake Pipeline Desciption
 #### Snakemake pipeline consist of ... number of rules:
