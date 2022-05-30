@@ -13,9 +13,10 @@
 * [Start running Snakemake pipeline](#Start-Snakemake-pipeline)
   * [Few errors solutions](#Some-mistakes-solutions,-suggestions-and-explanations)
 * [Results](#Results)
-* [Usefull References](#Usefull-References)
+* [Useful References](#Useful-References)
 * [Author and Acknowledgements](#Author-and-Acknowledgements)
-* [Feedback conracts](#Feedback)
+* [Feedback contacts](#Feedback)
+
 
 ## Introduction
 
@@ -24,23 +25,23 @@
 ## Background
 #### DNA superspiralization is an important mechanism of gene regulation in bacteria and superspiralization alteration, for instance, in response to antibiotics can change gene expression levels. Antibiotics of aminocoumarin class, like novobiocin, are able to change both superspiralization of genomic DNA and expression of genes responding to superspiralization levels. The object of the study is _Salmonella enterica_, bacterium largely resistant to novobiocin and DNA superspiralization alterations in general. Here we aim to analyze gene expression changes in _Salmonella_ cultures grown on media with varying concentrations of antibiotics and to identify clusters of coexpressing genes.
 
-
 ## Aim
 #### _To investigate effects of novobiocin on gene expression in **_Salmonella enterica_ subsp. _enterica_ serovar Typhimurium str. 14028S**._
 
 ## Project Objectives
 #### 1. align reads to reference genome;
 #### 2. obtain transcript count matrix;
-#### 3. [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) analysis of calculated expression matrix;
-#### 4. weighted gene co-ecspression network analysis using the [WGCNA](https://horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/); 
-#### 5. [Wopper](https://wopper.ba.itb.cnr.it) based visualisation of moduls of interest based on results of WGCNA analysis;
+#### 3. [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) analysis of the count matrix;
+#### 4. weighted gene co-expression network analysis using the [WGCNA](https://horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/); 
+#### 5. [Wopper](https://wopper.ba.itb.cnr.it) based visualization of modules of interest based on results of WGCNA analysis;
 #### 6. develop a reproducible workflow for transcriptomic data analysis based on [Snakemake pipeline](https://snakemake.readthedocs.io/en/stable/).
 
 ## Data Description
-#### Data is publicly available and can be found in paper of [Natalia Gogoleva _et. al_, 2020](https://www.sciencedirect.com/science/article/pii/S2352340920301918?via%3Dihub). 
-#### The provided dataset consists from RNA-seq reads obtained from samples of _S. enterica_ cultures treated with novobiocin at concentrations of 100 and 500 μg per mL, and untreated cultures. These reads were already filtered using [BBDuk (v. 37.23)](http://jgi.doe.gov/data-and-tools/bb-tools/). In our project we performed analysis only on reads from untreated culture and with addition of 500 μg per mL of novobiocin at three different timepoints: 10, 20 and 60 min.
-## Snakemake Pipeline Description
-#### Snakemake pipeline consist of 15 number of rules:
+#### Data is publicly available and can be found in the paper of [Natalia Gogoleva _et. al_, 2020](https://www.sciencedirect.com/science/article/pii/S2352340920301918?via%3Dihub). 
+#### The provided dataset consists of RNA-seq reads obtained from samples of _S. enterica_ cultures treated with novobiocin at concentrations of 100 and 500 μg per mL, and untreated cultures. These reads were already filtered using [BBDuk (v. 37.23)](http://jgi.doe.gov/data-and-tools/bb-tools/). In our project we performed analysis only on reads from untreated culture and with addition of 500 μg per mL of novobiocin at three different timepoints: 10, 20 and 60 min.
+
+## Snakemake Pipeline Desciption
+#### Snakemake pipeline consists of 15 rules:
 * [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) analysis of samples (SnakeMake Wrapper *v 1.5.0/bio/fastqc*)
 * [Hisat2](http://daehwankimlab.github.io/hisat2/) Index (*v 2.2.0*)
 * [Hisat2](http://daehwankimlab.github.io/hisat2/) Align (Snakemake wrapper *v 1.5.0/bio/hisat2/align*)
@@ -57,10 +58,10 @@
 * Reverse path (Python script)
 * Final Report (R Markdown)
 
-##### R markdown files will install automatically next packages during run of Snakemake pipeline:
+##### R markdown files will automatically install the following packages during the run of Snakemake pipeline:
 *__DESeq2, dplyr, ggplot2, gplots,clusterProfiler, WGCNA, knitr, KEGGREST,stringr__*
 
-##### The rest of used softwear will be installed during creation of snakemake environment. All installed tools can be foud in file config.yaml.
+##### The rest of the used software will be installed during the creation of snakemake environment. All installed tools can be found in file config.yaml.
 
 ## Installation of Snakemake
 #### Full installation description you can find on the [webpage of Snakemake](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
@@ -80,7 +81,11 @@ bash Mambaforge-pypy3-MacOSX-x86_64.sh
 ```markdown
 conda install -n base -c conda-forge mamba
 ```
-#### 3) Create snakemake environment
+#### 3) Download [repository](https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella) and go to folder of snakemake
+```markdown
+cd Path/to/folder/snakemake
+```
+#### 4) Create snakemake environment
 ```markdown
 conda activate base
 mamba env create --name snakemake --file environment.yaml
@@ -89,7 +94,7 @@ mamba env create --name snakemake --file environment.yaml
 ```markdown
 conda env remove -n snakemake
 ```
-#### 4) Activate snakemake environment
+#### 5) Activate snakemake environment
 ```markdown
 conda activate snakemake
 ```
@@ -101,12 +106,7 @@ conda deactivate
 ```markdown
 snakemake --help
 ```
-#### 5) Dowmload repositoty
 
-#### 6) Go to folder snakemake
-```markdown
-cd Path/to/folder/snakemake
-```
 ## Start Snakemake pipeline
 #### Data
 ##### RNA seq data
@@ -172,7 +172,12 @@ total                               83              1              8
 ## Results
 #### Description of project results can be found in presentation in folder results
 
-## Usefull References
+### Additional analysis of the AT composition
+##### Analysis of the AT-composition of the studied nodal genes; presented in a separate directory "AT_composition". The course of the analysis is written in the AT-composition notebook. Also in the directory is an additional file sequence.txt required for analysis (preprocessed file obtained from the annotation).
+
+### The result of Snakemake is Final_report.html file and opened in your browser maps of pathes of interest obtained via KEGG. In the results folder there is example of such file.
+
+## Useful References
 * [Mölder F, Jablonski KP, Letcher B et al. Sustainable data analysis with Snakemake [version 2; peer review: 2 approved]. F1000Research 2021, 10:33](https://doi.org/10.12688/f1000research.29032.2)
 * [Kim, D., Paggi, J.M., Park, C. et al. Graph-based genome alignment and genotyping with HISAT2 and HISAT-genotype. Nat Biotechnol 37, 907–915 (2019)](https://www.nature.com/articles/s41587-019-0201-4)
 * [Love MI, Huber W, Anders S (2014). “Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2.” Genome Biology, 15, 550. doi: 10.1186/s13059-014-0550-8.](https://doi.org/10.1186/s13059-014-0550-8)
