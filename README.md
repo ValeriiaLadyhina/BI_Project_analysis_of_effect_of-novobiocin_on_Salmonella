@@ -177,6 +177,170 @@ total                               83              1              8
 
 ### The result of Snakemake is Final_report.html file and opened in your browser maps of pathes of interest obtained via KEGG. In the results folder there is example of such file.
 
+### DESeq2
+Genes for which log2FoldChange<1.5 and FDR<0.05 were considered insignificant; a total of 789 significant genes were identified.
+370 positive genes and 419 negative genes were found:
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Volcano_plot.png" width="400" height="400">
+
+A large number of differentially expressed genes does not give a clear idea of the nature of the changes under the action of an antibiotic:
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/DEGs_Matrix_plot.png" width="400" height="400">
+
+For positive and negative differentially expressed genes, a KEGG enrichment analysis was performed.
+Positive DEGs:
+- C5-Branched dibasic acid metabolism 
+- Valine, leucine and isoleucine biosynthesis
+- Two-component system 
+- 2-Oxocarboxylic acid metabolism 
+- Ascorbate and aldarate metabolism 
+
+Negative DEGs:
+- Flagellar assembly 
+- Oxidative phosphorylation 
+- Glycolysis / Gluconeogenesis 
+- Bacterial chemotaxis 
+- Starch and sucrose metabolism 
+
+### WGCNA
+
+#### Samples clustering:
+
+Biological replicas are best grouped with each other, with the exception of sample 25. 
+The processed samples at the time points of 10 and 20 minutes and the control samples at the same time points were grouped into two separate groups. 
+The control and treated samples were separated into a separate group at 60 minutes. 
+The data demonstrate an increase in the similarity of gene expression profiles of treated and untreated samples at 60 minutes.
+
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Samples_clustering.png" width="400" height="400">
+
+*The image shows hierarchical clustering of samples (two variables are highlighted: Treated: 0 - white, 1 - black; Time: 10 - pink, 20 - blue, 60 - green).*
+
+#### Modules building:
+After building the network, 10 connected modules and 1 zero module were defined. Number of genes in modules: 154, 056, 937, 927, 462, 425, 294, 179, 176, 72, 47.
+**Module-clustering dendrogram:**
+
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Module-clustering_dendrogram.png" width="400" height="400">
+
+**Modules-Traits relationships:**
+
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Modules-Traits_relationships.png" width="400" height="400">
+
+*Modules associated with the “Treated” variable: brown, turquoise, black, yellow. Modules associated with the “Time” variable: green, blue, red.*
+
+**Modules clustering:**
+
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Modules_clustering.png" width="400" height="400">
+
+*Modules black, brown, yellow with a strong positive correlation with the “Treated” variable were combined into one group.*
+
+For significant modules, KEGG enrichment analysis was carried out.
+**"Treated"-associated modules**
+
+Negative module:
+- Glycolysis / Gluconeogenesis 
+- Amino sugar and nucleotide sugar metabolism 
+- ABC transporters 
+- Porphyrin metabolism 
+- Histidine metabolism 
+- beta-Lactam resistance 
+
+Positive modules:
+- Cationic antimicrobial peptide (CAMP) resistance 
+- Two-component system   
+- Lipopolysaccharide biosynthesis  
+- C5-Branched dibasic acid metabolism 
+- 2-Oxocarboxylic acid metabolism 
+- Two-component system 
+- Ascorbate and aldarate metabolism 
+- Bacterial secretion system 
+
+**"Time"-associated modules**
+
+Positive module:
+- Sulfur metabolism 
+- Lysine degradation 
+- Arginine and proline metabolism 
+- Microbial metabolism in diverse environments 
+
+Negative modules:
+- Sulfur relay system  
+- Ribosome   
+- Aminoacyl-tRNA biosynthesis
+
+
+#### Hub genes analysis
+
+The functionality of the R language was used to identify the hub genes in the module (hub genes were considered to have a correlation coefficient with the eigengene of more than 0.9).
+We obtained hub genes for modules associated with novobiocin and time. Number of hub genes for different modules: black - 42; brown - 167; yellow - 108; turquoise - 284; red - 94; blue - 147; green - 160.
+For hub genes from modules, KEGG enrichment analysis was carried out.
+
+**Pathways were found that were consistently found both among the hub genes of the modules and among the differentially expressed genes:**
+
+- C5-Branched dibasic acid metabolism;
+- 2-Oxocarboxylic acid metabolism;
+- Two-component system;
+- Glycolysis / Gluconeogenesis.
+
+These pathways are the most sensitive pathways to novobiocin treatment; they were used to visualize the dynamics of their expression.
+
+### Analysis of the dynamics of significant pathways
+
+The visualization of the dynamics of the hub genes pathways was carried out. As a generalization of gene expression, the first principal component was used for a subset of genes included in the module and included in a significant biological pathway.
+
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Two_component_system.png" width="200" height="200">
+
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/C5_Branched_dibasic_acid_metabolism.png" width="200" height="200">
+
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/2-Oxocarboxylic_acid_metabolism.png" width="200" height="200">
+
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Glycolysis_Gluconeogenesis.png" width="200" height="200">
+
+### Mapping modules per chromosome
+
+The modules associated with "Treated" and "Time" were mapped to the chromosome using the WoPPER online tool: https://wopper.ba.itb.cnr.it/WoPPER#!/View/v1nnzudodwda9keleutqqrw8znqo 
+
+Time modules:
+
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/WoPPER_Time.png" width="200" height="200">
+
+Treated modules:
+
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/WoPPER_Treated.png" width="200" height="200">
+
+### AT-composition
+
+The topological state of DNA influences its affinity for some DNA binding proteins, especially in DNA sequences that have a high A + T base content.
+We compared the AT composition of the hub gene sequences associated with novobiocin treatment with the AT composition of the hub genes associated with time.
+
+The AT composition was calculated as the sum of A and T divided by the length of the sequence. This value was calculated for each gene from the list of hub genes. 
+The results for the “Treated” and “Time” modules were combined. The distributions for the values were significantly different from normal (p-value = 2.2e-16 and p-value = 1.273e-12 for the "Treated" and "Time" modules, respectively), so the nonparametric Mann-Whitney test was used. 
+The groups were significantly different from each other (p-value = 6.823e-11), although the difference between the means was small (0.496 and 0.470 for "Time" and "Treated", respectively).
+
+The slight difference in the AT composition can be explained by the fact that it is important for supercoiling for the promoter regions of genes, so we studied it in the initial segments of the sequence using the sliding window method.
+A "window" of 30 nucleotides long (the approximate length of a promoter) was iteratively shifted one nucleotide from the beginning of the gene sequence; 
+The AT composition was calculated within the limits of the window according to the above method.
+For each module, a sequence of values of the AT composition averaged for the hub genes of the module within the "window" is calculated.
+
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/AT_composition.png" width="400" height="400">
+
+*The graph shows the frequencies of A and T, calculated within a 30-nucleotide "window". The X-axis shows a section from 1 to 300 nucleotides of the gene under study. The Y-axis plots the average frequency of A and T (AT-composition) for the hub genes of the module in a given position of the "window". Blue shows the frequencies for modules that are positively correlated with the "Treated" variable; the module shown in blue is negatively correlated with the "Treated" variable; modules in purple are not correlated with the "Treated" variable (associated with the "Time" variable).*
+
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/AT_mean_composition.png" width="400" height="400">
+
+*The negatively correlated module showed frequencies close to the "Time" modules, so we focused on the positive "Treated" modules. For positive modules "Treated" and for modules "Time" the values were averaged. Green indicates A and T frequencies for positive "Treated" modules, blue indicates frequencies for "Time" modules. The X and Y values correspond to the previous plot.* 
+
+## Discussion
+
+Biological pathways may have different dynamics over time; Two-component system genes increase their expression by 20 minutes with a subsequent decrease; 
+C5-Branched dibasic acid metabolism and 2-Oxocarboxylic acid metabolism genes increase expression over time; 
+Glycolysis/Gluconeogenesis genes increase their expression over time in control samples, however, when treated with novobiocin, they do not show any noticeable dynamics.
+Two-component system is a system for perceiving changes in the environment; this system can also be associated with a change in supercoiling, which also perceives a large number of stress stimuli (pH, osmotic composition, etc.). 
+The lack of dynamics in the expression of glycolysis pathway genes may be associated with the bacteriostatic effect of novobiocin (these processes are associated with anabolic pathways); 
+C5-Branched dibasic acid metabolism and 2-Oxocarboxylic acid metabolism may be involved in some of the signaling pathways associated with changes in supercoiling.
+
+The co-expression modules show a diffuse distribution along the length of the chromosome, which may correspond to the influence of a systemic process, such as a change in supercoiling.
+Genes in co-expressed modules are located at significant distances from each other (more than 1Mp). This can be explained by the topology of the chromosome, but does not exclude the influence of DNA supercoiling on the activation of modules.
+The initial regions of genes sensitive to novobiocin are characterized by a richer AT composition, which suggests sensitivity to changes in DNA supercoiling.
+
+
 ## Useful References
 * [Mölder F, Jablonski KP, Letcher B et al. Sustainable data analysis with Snakemake [version 2; peer review: 2 approved]. F1000Research 2021, 10:33](https://doi.org/10.12688/f1000research.29032.2)
 * [Kim, D., Paggi, J.M., Park, C. et al. Graph-based genome alignment and genotyping with HISAT2 and HISAT-genotype. Nat Biotechnol 37, 907–915 (2019)](https://www.nature.com/articles/s41587-019-0201-4)
