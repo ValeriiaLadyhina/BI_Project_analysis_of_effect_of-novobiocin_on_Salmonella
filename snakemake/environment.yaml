@@ -10,3 +10,4 @@ dependencies:
   - stringtie=2.2.1
   - pandoc=2.18
   - pandas
+  - sra-tools=2.8.0
