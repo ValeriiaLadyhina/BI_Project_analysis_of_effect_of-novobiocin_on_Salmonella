@@ -134,17 +134,6 @@ geneIDs={} #key=transcript, value=cluster/gene_id
 for s in samples:
     badGenes=[] #list of bad genes (just ones that aren't MSTRG)
     try:
-        ## opts.input = parent directory of sample subdirectories
-        ## s = sample currently iterating through
-        ## os.path.join(opts.input,s,"*.gtf") path to current sample's GTF
-        ## split = list of lists: [[chromosome, ...],...]
-
-        #with open(glob.iglob(os.path.join(opts.input,s,"*.gtf")).next()) as f:
-        #    split=[l.split('\t') for l in f.readlines()]
-#        if not gtfList:
-#            f = open(glob.iglob(os.path.join(opts.input,s[1],"*.gtf")).next())
-#        else:
-#            f = open(s[1])
         with open(s[1]) as f:
             split=[l.split('\t') for l in f.readlines()]
 
