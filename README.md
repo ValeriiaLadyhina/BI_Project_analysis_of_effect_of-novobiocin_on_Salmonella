@@ -81,7 +81,11 @@ bash Mambaforge-pypy3-MacOSX-x86_64.sh
 ```markdown
 conda install -n base -c conda-forge mamba
 ```
-#### 3) Create snakemake environment
+#### 3) Download [repository](https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella) and go to folder of snakemake
+```markdown
+cd Path/to/folder/snakemake
+```
+#### 4) Create snakemake environment
 ```markdown
 conda activate base
 mamba env create --name snakemake --file environment.yaml
@@ -90,7 +94,7 @@ mamba env create --name snakemake --file environment.yaml
 ```markdown
 conda env remove -n snakemake
 ```
-#### 4) Activate snakemake environment
+#### 5) Activate snakemake environment
 ```markdown
 conda activate snakemake
 ```
@@ -102,12 +106,7 @@ conda deactivate
 ```markdown
 snakemake --help
 ```
-#### 5) Dowmload repositoty
 
-#### 6) Go to folder snakemake
-```markdown
-cd Path/to/folder/snakemake
-```
 ## Start Snakemake pipeline
 #### Data
 ##### RNA seq data
