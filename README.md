@@ -142,6 +142,15 @@ snakemake --unlock argument
 snakemake --use-conda --cores all -F # force to rerun fully Snakemake pipeline, otherwise 
                                      # it will run only that parts that did not run before
 ```
+##### CreateCondaEnvironmentException
+```
+CreateCondaEnvironmentException:
+Your conda installation is not configured to use strict channel priorities. This is however crucial for having robust and correct environments (for details, see https://conda-forge.org/docs/user/tipsandtricks.html). Please configure strict priorities by executing 'conda config --set channel_priority strict'.
+```
+##### CreateCondaEnvironmentException solution
+```markdown
+
+```
 ##### Explanations
 *This is how the working pipeline starting its processes. In this part Snakemake describes which process will be performed and how many jobs per process (count).
 ```
