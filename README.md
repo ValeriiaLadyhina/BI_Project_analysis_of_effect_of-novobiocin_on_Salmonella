@@ -306,9 +306,10 @@ The visualization of the dynamics of the hub genes pathways was carried out. As 
 
 The modules associated with "Treated" and "Time" were mapped to the chromosome using the WoPPER online tool: https://wopper.ba.itb.cnr.it/WoPPER#!/View/v1nnzudodwda9keleutqqrw8znqo 
 
-Time modules:
+Time modules: | Treated modules:
+--------------|-----------------
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/WoPPER_Time.png" width="200" height="200"> | <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/WoPPER_Treated.png" width="200" height="200">
 
-<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/WoPPER_Time.png" width="200" height="200">
 
 Treated modules:
 
