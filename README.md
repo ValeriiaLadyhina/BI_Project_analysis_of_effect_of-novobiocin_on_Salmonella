@@ -225,7 +225,7 @@ The data demonstrate an increase in the similarity of gene expression profiles o
 #### Modules building:
 After building the network, 10 connected modules and 1 zero module were defined. Number of genes in modules: 154, 056, 937, 927, 462, 425, 294, 179, 176, 72, 47.
 **Module-clustering dendrogram:**
-<p float="middle">
+<p float="centre">
 <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Module-clustering_dendrogram.png" width="400" height="400" />
 </p>
 **Modules-Traits relationships:**
