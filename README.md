@@ -329,11 +329,14 @@ For each module, a sequence of values of the AT composition averaged for the hub
 <p align="center">
 <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/AT_composition.png" width="400" height="400">
 </p>
-*The graph shows the frequencies of A and T, calculated within a 30-nucleotide "window". The X-axis shows a section from 1 to 300 nucleotides of the gene under study. The Y-axis plots the average frequency of A and T (AT-composition) for the hub genes of the module in a given position of the "window". Blue shows the frequencies for modules that are positively correlated with the "Treated" variable; the module shown in blue is negatively correlated with the "Treated" variable; modules in purple are not correlated with the "Treated" variable (associated with the "Time" variable).*
+
+The graph shows the frequencies of A and T, calculated within a 30-nucleotide "window". The X-axis shows a section from 1 to 300 nucleotides of the gene under study. The Y-axis plots the average frequency of A and T (AT-composition) for the hub genes of the module in a given position of the "window". Blue shows the frequencies for modules that are positively correlated with the "Treated" variable; the module shown in blue is negatively correlated with the "Treated" variable; modules in purple are not correlated with the "Treated" variable (associated with the "Time" variable).
+
 <p align="center">
 <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/AT_mean_composition.png" width="400" height="400">
 </p>
-*The negatively correlated module showed frequencies close to the "Time" modules, so we focused on the positive "Treated" modules. For positive modules "Treated" and for modules "Time" the values were averaged. Green indicates A and T frequencies for positive "Treated" modules, blue indicates frequencies for "Time" modules. The X and Y values correspond to the previous plot.* 
+
+The negatively correlated module showed frequencies close to the "Time" modules, so we focused on the positive "Treated" modules. For positive modules "Treated" and for modules "Time" the values were averaged. Green indicates A and T frequencies for positive "Treated" modules, blue indicates frequencies for "Time" modules. The X and Y values correspond to the previous plot.
 
 ## Discussion
 
