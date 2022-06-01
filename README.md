@@ -228,21 +228,19 @@ The data demonstrate an increase in the similarity of gene expression profiles o
 
 #### Modules building:
 After building the network, 10 connected modules and 1 zero module were defined. Number of genes in modules: 154, 056, 937, 927, 462, 425, 294, 179, 176, 72, 47.
+<p align="center">
 **Module-clustering dendrogram:** | **Modules-Traits relationships:**
 ----------------------------------|----------------------------------
 <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Module-clustering_dendrogram.png" width="400" height="400"> | <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Modules-Traits_relationships.png" width="400" height="400">
+</p>
 
-
-**Modules-Traits relationships:**
-
-<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Modules-Traits_relationships.png" width="400" height="400">
 
 *Modules associated with the “Treated” variable: brown, turquoise, black, yellow. Modules associated with the “Time” variable: green, blue, red.*
 
 **Modules clustering:**
-
+<p align="center">
 <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Modules_clustering.png" width="400" height="400">
-
+</p>
 *Modules black, brown, yellow with a strong positive correlation with the “Treated” variable were combined into one group.*
 
 For significant modules, KEGG enrichment analysis was carried out.
@@ -305,10 +303,11 @@ The visualization of the dynamics of the hub genes pathways was carried out. As 
 ### Mapping modules per chromosome
 
 The modules associated with "Treated" and "Time" were mapped to the chromosome using the WoPPER online tool: https://wopper.ba.itb.cnr.it/WoPPER#!/View/v1nnzudodwda9keleutqqrw8znqo 
-
+<p align="center">
 Time modules: | Treated modules:
 --------------|-----------------
 <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/WoPPER_Time.png" width="400" height="350"> | <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/WoPPER_Treated.png" width="400" height="350">
+</p>
 
 ### AT-composition
 
@@ -323,9 +322,9 @@ The slight difference in the AT composition can be explained by the fact that it
 A "window" of 30 nucleotides long (the approximate length of a promoter) was iteratively shifted one nucleotide from the beginning of the gene sequence; 
 The AT composition was calculated within the limits of the window according to the above method.
 For each module, a sequence of values of the AT composition averaged for the hub genes of the module within the "window" is calculated.
-
+<p align="center">
 <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/AT_composition.png" width="400" height="400">
-
+>/p>
 *The graph shows the frequencies of A and T, calculated within a 30-nucleotide "window". The X-axis shows a section from 1 to 300 nucleotides of the gene under study. The Y-axis plots the average frequency of A and T (AT-composition) for the hub genes of the module in a given position of the "window". Blue shows the frequencies for modules that are positively correlated with the "Treated" variable; the module shown in blue is negatively correlated with the "Treated" variable; modules in purple are not correlated with the "Treated" variable (associated with the "Time" variable).*
 
 <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/AT_mean_composition.png" width="400" height="400">
