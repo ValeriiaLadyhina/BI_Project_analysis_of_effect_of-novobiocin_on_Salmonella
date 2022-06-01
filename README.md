@@ -189,11 +189,13 @@ total                               83              1              8
 ### DESeq2
 Genes for which log2FoldChange<1.5 and FDR<0.05 were considered insignificant; a total of 789 significant genes were identified.
 370 positive genes and 419 negative genes were found:
-
-<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Volcano_plot.png" width="400" height="400">
-
+<p align="center">
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Volcano_plot.png" width="400" height="400" />
+ </p>
+<p align="center">
 A large number of differentially expressed genes does not give a clear idea of the nature of the changes under the action of an antibiotic:
-<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/DEGs_Matrix_plot.png" width="400" height="400">
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/DEGs_Matrix_plot.png" width="400" height="400" />
+ </p>
 
 For positive and negative differentially expressed genes, a KEGG enrichment analysis was performed.
 Positive DEGs:
@@ -218,17 +220,19 @@ Biological replicas are best grouped with each other, with the exception of samp
 The processed samples at the time points of 10 and 20 minutes and the control samples at the same time points were grouped into two separate groups. 
 The control and treated samples were separated into a separate group at 60 minutes. 
 The data demonstrate an increase in the similarity of gene expression profiles of treated and untreated samples at 60 minutes.
-
-<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Samples_clustering.png" width="400" height="400">
+<p align="center">
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Samples_clustering.png" width="400" height="400" />
+ </p>
 
 *The image shows hierarchical clustering of samples (two variables are highlighted: Treated: 0 - white, 1 - black; Time: 10 - pink, 20 - blue, 60 - green).*
 
 #### Modules building:
 After building the network, 10 connected modules and 1 zero module were defined. Number of genes in modules: 154, 056, 937, 927, 462, 425, 294, 179, 176, 72, 47.
-**Module-clustering dendrogram:**
-<p align="center">
-<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Module-clustering_dendrogram.png" width="400" height="400" />
-</p>
+**Module-clustering dendrogram:** | **Modules-Traits relationships:**
+----------------------------------|----------------------------------
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Module-clustering_dendrogram.png" width="400" height="400"> | <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Modules-Traits_relationships.png" width="400" height="400">
+
+
 **Modules-Traits relationships:**
 
 <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Modules-Traits_relationships.png" width="400" height="400">
