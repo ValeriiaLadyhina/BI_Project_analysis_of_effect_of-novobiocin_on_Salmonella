@@ -189,6 +189,7 @@ total                               83              1              8
 ### DESeq2
 Genes for which log2FoldChange<1.5 and FDR<0.05 were considered insignificant; a total of 789 significant genes were identified.
 370 positive genes and 419 negative genes were found:
+
 <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Volcano_plot.png" width="400" height="400">
 
 A large number of differentially expressed genes does not give a clear idea of the nature of the changes under the action of an antibiotic:
