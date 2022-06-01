@@ -308,12 +308,7 @@ The modules associated with "Treated" and "Time" were mapped to the chromosome u
 
 Time modules: | Treated modules:
 --------------|-----------------
-<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/WoPPER_Time.png" width="200" height="200"> | <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/WoPPER_Treated.png" width="200" height="200">
-
-
-Treated modules:
-
-<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/WoPPER_Treated.png" width="200" height="200">
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/WoPPER_Time.png" width="400" height="400"> | <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/WoPPER_Treated.png" width="400" height="400">
 
 ### AT-composition
 
