@@ -295,9 +295,8 @@ These pathways are the most sensitive pathways to novobiocin treatment; they wer
 
 The visualization of the dynamics of the hub genes pathways was carried out. As a generalization of gene expression, the first principal component was used for a subset of genes included in the module and included in a significant biological pathway.
 
-<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Two_component_system.png" width="200" height="200"> | <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/C5_Branched_dibasic_acid_metabolism.png" width="200" height="200">
----------------------------|-------------------------------
-<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/2-Oxocarboxylic_acid_metabolism.png" width="200" height="200"> | <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Glycolysis_Gluconeogenesis.png" width="200" height="200">
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Two_component_system.png" width="250" height="250"> | <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/C5_Branched_dibasic_acid_metabolism.png" width="250" height="250"> |
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/2-Oxocarboxylic_acid_metabolism.png" width="250" height="250"> | <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Glycolysis_Gluconeogenesis.png" width="250" height="250">
 
 ### Mapping modules per chromosome
 
