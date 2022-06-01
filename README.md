@@ -1,6 +1,8 @@
 # A Reproducible Snakemake-based Workflow for Project "Studying _Salmonella_ Gene Expression Dynamics in Response to Novobiocin"
 ## Project was performed as a part of studies in [Bioinformatics institute](https://bioinf.me/en) on program [Bioinformatics for Biologists](https://bioinf.me/en/education#!/tab/40660730-1) during spring semester 2022.
+<p align="center">
 <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/extra/Salmonella.png" width="300" height="300">
+</p>
 
 ## README content
 * [Introduction](#Introduction)
@@ -228,11 +230,14 @@ The data demonstrate an increase in the similarity of gene expression profiles o
 
 #### Modules building:
 After building the network, 10 connected modules and 1 zero module were defined. Number of genes in modules: 154, 056, 937, 927, 462, 425, 294, 179, 176, 72, 47.
+
+**Module-clustering dendrogram:**
 <p align="center">
-**Module-clustering dendrogram:**                **Modules-Traits relationships:**
- </p>
-<p align="center">
-<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Module-clustering_dendrogram.png" width="400" height="400">  <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Modules-Traits_relationships.png" width="400" height="400">
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Module-clustering_dendrogram.png" width="400" height="400"> 
+</p>
+**Modules-Traits relationships:**
+<p align="center"> 
+<img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/Modules-Traits_relationships.png" width="400" height="400">
 </p>
 
 
@@ -304,11 +309,9 @@ The visualization of the dynamics of the hub genes pathways was carried out. As 
 ### Mapping modules per chromosome
 
 The modules associated with "Treated" and "Time" were mapped to the chromosome using the WoPPER online tool: https://wopper.ba.itb.cnr.it/WoPPER#!/View/v1nnzudodwda9keleutqqrw8znqo 
-<p align="center">
 Time modules: | Treated modules:
 --------------|-----------------
 <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/WoPPER_Time.png" width="400" height="350"> | <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/WoPPER_Treated.png" width="400" height="350">
-</p>
 
 ### AT-composition
 
@@ -325,11 +328,11 @@ The AT composition was calculated within the limits of the window according to t
 For each module, a sequence of values of the AT composition averaged for the hub genes of the module within the "window" is calculated.
 <p align="center">
 <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/AT_composition.png" width="400" height="400">
->/p>
+</p>
 *The graph shows the frequencies of A and T, calculated within a 30-nucleotide "window". The X-axis shows a section from 1 to 300 nucleotides of the gene under study. The Y-axis plots the average frequency of A and T (AT-composition) for the hub genes of the module in a given position of the "window". Blue shows the frequencies for modules that are positively correlated with the "Treated" variable; the module shown in blue is negatively correlated with the "Treated" variable; modules in purple are not correlated with the "Treated" variable (associated with the "Time" variable).*
-
+<p align="center">
 <img src="https://github.com/ValeriiaLadyhina/BI_Project_analysis_of_effect_of-novobiocin_on_Salmonella/blob/main/Results/Images/AT_mean_composition.png" width="400" height="400">
-
+</p>
 *The negatively correlated module showed frequencies close to the "Time" modules, so we focused on the positive "Treated" modules. For positive modules "Treated" and for modules "Time" the values were averaged. Green indicates A and T frequencies for positive "Treated" modules, blue indicates frequencies for "Time" modules. The X and Y values correspond to the previous plot.* 
 
 ## Discussion
